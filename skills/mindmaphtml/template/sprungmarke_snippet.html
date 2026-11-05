@@ -1,0 +1,7 @@
+
+<!-- Sprungmarke aus der EMF-Mindmap: #schritt-N oder #tab-xyz/schritt-N öffnet den Tab und springt zum Rechenschritt -->
+<style>.mm-hit{animation:mmhit 2.8s ease}@keyframes mmhit{0%,65%{background:var(--mark);box-shadow:0 0 0 6px var(--mark)}100%{background:transparent;box-shadow:none}}</style>
+<script>(function(){function go(){var m=decodeURIComponent(location.hash.slice(1)).match(/^(?:(tab-[\w-]+)\/)?schritt-(\d+)$/);if(!m)return;
+if(m[1]){var t=document.getElementById(m[1]);if(t&&t.getAttribute('aria-pressed')!=='true')t.click();}
+setTimeout(function(){var li=document.querySelectorAll('#sol-steps > li')[m[2]-1];if(!li)return;li.classList.add('mm-hit');li.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){li.classList.remove('mm-hit')},2900);},150);}
+addEventListener('hashchange',go);if(document.readyState==='complete')go();else addEventListener('load',go);})();</script>
