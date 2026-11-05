@@ -10,6 +10,8 @@ A Claude Code plugin marketplace with skills for building interactive study mate
 
 ![EMF-1 example mind map (light mode, concept "Gaußscher Satz" selected)](docs/mindmap-light.png)
 
+**[▶ Try the live demo](https://mowolf7.github.io/amo-skills/)** (EMF-1 example, runs in the browser)
+
 ## Installation
 
 In Claude Code:
@@ -46,7 +48,7 @@ For theoretical subjects, questions that need long written answers, calculations
 
 ### Example: EMF 1 (electromagnetic fields)
 
-[`examples/emf1/`](examples/emf1/) holds a complete mind map in German with 9 exercise pages, 33 concepts and 6 custom 3D figures. To try it, clone the repo and open `examples/emf1/index.html` in a browser. No internet connection is needed.
+[`examples/emf1/`](examples/emf1/) holds a complete mind map in German with 9 exercise pages, 33 concepts and 6 custom 3D figures. Try it in your browser in the **[live demo](https://mowolf7.github.io/amo-skills/)**, or clone the repo and open `examples/emf1/index.html`. No internet connection is needed for the local copy.
 
 | Mind map (dark mode) | Exercise page |
 |---|---|
@@ -95,7 +97,7 @@ skills/mindmaphtml/
     vendor/               # embedded libraries with their licenses
 examples/emf1/            # finished offline example (mind map + 9 exercise pages)
 docs/                     # screenshots for this README
-.github/workflows/        # automatic checks on every pull request
+.github/workflows/        # automatic checks and live demo
 CHANGELOG.md              # version history
 ```
 
