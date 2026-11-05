@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EMF 1 Mindmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Kalam:wght@400;700&family=STIX+Two+Text:ital@0;1&display=swap">
+<style>
+/*BASECSS*/
+
+/*REUSECSS*/
+.top{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.search{display:flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:999px;background:var(--card);padding:4px 12px;min-width:0;flex:1 1 220px;max-width:340px}
+.search input{border:0;background:transparent;color:var(--ink);font:500 15px var(--f-body);width:100%;outline:none;min-width:0}
+.search small{color:var(--muted);white-space:nowrap}
+#chips{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{font:600 13px var(--f-display);padding:5px 11px;border:2px solid var(--c);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.fchip[aria-pressed="true"]{background:var(--c);color:#fff}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.small{padding:5px 11px;font-size:13px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:18px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:1fr}}
+.mapbox{position:relative}
+.node.off,.link.off{display:none}
+#always{position:absolute;left:12px;bottom:12px;max-width:230px;text-align:left;background:var(--card);border:2px dashed var(--ok);border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--ink);font:13px/1.35 var(--f-body)}
+#always b{display:block;font:700 15px var(--f-display);color:var(--ok)}
+#always:hover{border-style:solid}
+.mapctl{position:absolute;right:12px;top:12px;display:flex;gap:6px}
+.mapctl .btn{background:var(--card)}
+#panel{background:var(--card);border:2px solid var(--ink);border-radius:6px;padding:18px;display:grid;gap:12px;align-content:start;max-height:min(82vh,900px);overflow:auto;min-width:0;scroll-margin-top:12px}
+@media (max-width:900px){#panel{max-height:none}}
+#panel h2{margin:0;font:800 26px/1.1 var(--f-display);text-wrap:balance}
+#panel h3{margin:6px 0 0;font:700 16px var(--f-display)}
+#panel p{margin:0}
+.p-eyebrow{font:18px var(--f-hand);color:var(--gauss)}
+.p-muted{color:var(--muted);font-size:14px}
+.howto{margin:0;padding-left:18px;display:grid;gap:4px}
+.fbox{font-family:var(--f-math);font-size:19px;line-height:1.7;background:var(--paper);border:2px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto}
+.fbox i{font-style:italic}
+.facts{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;font-size:14.5px}
+.facts dt{font-weight:700}.facts dd{margin:0;color:var(--muted)}
+.bar{display:inline-block;width:90px;height:8px;border-radius:4px;background:var(--line);vertical-align:middle;overflow:hidden}.bar i{display:block;height:100%}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.uses{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.uses li{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:6px}
+.chip,.tref{font:500 14px var(--f-body);border:2px solid var(--c);border-radius:999px;background:transparent;color:var(--ink);padding:3px 11px;cursor:pointer;text-align:left}
+.tref{border-radius:6px}.tref b{color:var(--c)}
+.go{font:600 13px var(--f-display);border:0;background:transparent;color:var(--gauss);cursor:pointer;padding:4px 2px}
+.go:hover,.chip:hover,.tref:hover{text-decoration:underline}
+.checks{margin:0;padding-left:20px;display:grid;gap:6px}
+.analog{font-size:14.5px;color:var(--muted)}
+.fig{position:relative;height:250px;border:2px solid var(--line);border-radius:6px;background:var(--paper);touch-action:none;cursor:grab}
+.fig canvas{display:block;width:100%!important;height:100%!important}
+.fig .hint{position:absolute;left:8px;bottom:4px;font:14px var(--f-hand);color:var(--muted);pointer-events:none}
+.qz{border:2px solid var(--line);border-radius:6px;background:var(--paper);padding:12px;display:grid;gap:8px}
+.qz .hint{font:16px var(--f-hand);color:var(--gauss)}
+.qz p{margin:0}.qz .opts{display:grid;gap:6px}
+.qz .opt{text-align:left;font:14.5px var(--f-body);padding:7px 10px;border:2px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);cursor:pointer}
+.qz .opt:hover:not(:disabled){border-color:var(--ink)}.qz .opt:disabled{cursor:default}
+.qz .opt.right{border-color:var(--ok);color:var(--ok);font-weight:700}.qz .opt.wrong{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.qz .why{font-size:13.5px;color:var(--muted)}.qz .q+.q{border-top:1px solid var(--line);padding-top:8px}
+#ov{position:fixed;inset:0;z-index:50;background:rgba(10,16,24,.55);display:grid;padding:max(10px,env(safe-area-inset-top)) 10px 10px}
+#ov[hidden]{display:none}
+.ov-card{background:var(--paper);border:2px solid var(--ink);border-radius:8px;display:grid;grid-template-rows:auto 1fr;overflow:hidden;min-height:0}
+.ov-bar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:2px solid var(--ink);background:var(--card)}
+.ov-bar b{font:700 16px var(--f-display);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ov-bar a{font:600 13px var(--f-display);color:var(--gauss)}
+#ov-frame{width:100%;height:100%;border:0;background:var(--paper)}
+body.noscroll{overflow:hidden}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gauss);outline-offset:2px}
+
+.mapbox{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:6px;height:min(82vh,900px);min-height:440px;overflow:hidden}
+.wrap{max-width:1720px}
+#net3d{position:absolute;inset:0;z-index:1;background:var(--card)}.mapctl{z-index:2}#net3d canvas{display:block;width:100%!important;height:100%!important;cursor:grab}
+.mapbox.is3d #always,.mapbox.is3d #fit{display:none}
+#map{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.zone{fill-opacity:.07;stroke-width:2;stroke-dasharray:6 6;stroke-opacity:.6}
+.zlabel{font:700 30px var(--f-hand);text-anchor:middle}
+.link{fill:none;stroke-width:1.6;stroke-opacity:.45;transition:stroke-opacity .2s}
+.link.analog{stroke-dasharray:7 6;stroke-width:2.4;stroke-opacity:.85}
+.link.quiet{stroke-opacity:.14}
+.link.hot{stroke-opacity:1;stroke-width:3}
+.link.dim{stroke-opacity:.06}
+.node{cursor:pointer;transition:opacity .2s}
+.node rect{fill:var(--card);stroke-width:2.2}
+.node.topic rect{stroke-width:2.6}
+.node.sel rect{stroke-width:4}
+.node.dim{opacity:.15}
+.node:focus-visible{outline:none}.node:focus-visible rect{stroke-width:4}
+.nr{fill:#fff;font:800 14px var(--f-display);text-anchor:middle}
+.tname{fill:var(--ink);font:700 18px var(--f-display)}
+.badge3d{fill:var(--muted);font:700 12px var(--f-display);text-anchor:end}
+.cname{fill:var(--ink);font:500 16px var(--f-body);text-anchor:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">EMF 1 · Landkarte aller Themen und Konzepte</div>
+    <h1>EMF-1-Mindmap</h1>
+    <p class="lede">Jedes Thema führt zu deiner fertigen 3D-Seite. Jedes Konzept zeigt Formel, Erklärung und Falle und springt direkt zum passenden Rechenschritt.</p>
+  </header>
+  <div class="top">
+    <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="Suchen, z. B. Gauß, κ, Spiegel …" aria-label="Suchen"><small id="qn"></small></label>
+    <div id="chips" aria-label="Bereiche ein- und ausblenden"></div>
+  </div>
+  <div class="main">
+    <div class="mapbox">
+      <svg id="map" aria-label="Mindmap"></svg>
+      <button id="always"><b>✓ Immer machen</b>Probe & Grenzfälle: gilt für jede Aufgabe</button>
+      <div class="mapctl"><button class="btn small" id="fit">Alles zeigen</button><button class="btn small" id="v3d" aria-pressed="false">3D-Ansicht</button></div>
+    </div>
+    <aside id="panel" aria-live="polite"></aside>
+  </div>
+</div>
+<div id="ov" hidden role="dialog" aria-modal="true" aria-labelledby="ov-title">
+  <div class="ov-card">
+    <div class="ov-bar"><b id="ov-title"></b><a id="ov-tab" target="_blank" rel="noopener">in neuem Tab öffnen ↗</a><button class="btn small" id="ov-close">Schließen ✕</button></div>
+    <iframe id="ov-frame" title="3D-Seite"></iframe>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<!-- MM:DATA (nur diesen Block für eine neue Mindmap ersetzen) -->
+<script>/*DATA*/</script>
+<!-- /MM:DATA -->
+<script>/*MAP*/</script>
+<script>/*PANEL*/</script>
+<script>/*FIGB*/</script>
+<script>/*FIG*/</script>
+<script>/*NET3D*/</script>
+</body>
+</html>

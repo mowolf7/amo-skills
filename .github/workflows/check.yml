@@ -1,0 +1,54 @@
+name: Check
+
+# Runs on every pull request and on pushes to main:
+# validates the plugin, rebuilds the example, checks that every page is offline-ready
+# and runs the full browser test with all network access blocked.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate plugin and marketplace
+        run: npx -y @anthropic-ai/claude-code@2.1.318 plugin validate .
+
+      - name: Example pages are offline-ready
+        run: python3 -I skills/mindmaphtml/template/offline.py examples/emf1/*.html
+
+      - name: Build the example mind map from the template
+        working-directory: skills/mindmaphtml/template
+        run: python3 -I build.py data_beispiel_EMF1.js ../../../examples/emf1 09_Zweigeteilte_Kugel.html "$RUNNER_TEMP/index.html"
+
+      - name: Install Playwright with Chromium
+        run: |
+          mkdir -p "$RUNNER_TEMP/t/pages"
+          cd "$RUNNER_TEMP/t"
+          npm init -y > /dev/null
+          npm install --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      - name: Browser test without network
+        run: |
+          cp skills/mindmaphtml/template/test_komplett.js skills/mindmaphtml/template/test_route.js "$RUNNER_TEMP/t/"
+          cp examples/emf1/*.html "$RUNNER_TEMP/t/pages/"
+          cp "$RUNNER_TEMP/index.html" "$RUNNER_TEMP/t/pages/00_build.html"
+          cd "$RUNNER_TEMP/t"
+          node test_komplett.js index.html
+          node test_komplett.js 00_build.html
