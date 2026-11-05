@@ -2,6 +2,10 @@
 
 All notable changes to this marketplace. Versions follow [Semantic Versioning](https://semver.org).
 
+## Unreleased
+
+- Live demo of the EMF-1 example on GitHub Pages: https://mowolf7.github.io/amo-skills/
+
 ## 1.0.0
 
 First public release.

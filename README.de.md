@@ -10,6 +10,8 @@ Ein Claude-Code-Plugin-Marketplace mit Skills für interaktives Lernmaterial.
 
 ![EMF-1-Beispiel (heller Modus, Konzept „Gaußscher Satz“ ausgewählt)](docs/mindmap-light.png)
 
+**[▶ Live-Demo ausprobieren](https://mowolf7.github.io/amo-skills/)** (EMF-1-Beispiel, läuft im Browser)
+
 ## Installation
 
 In Claude Code:
@@ -46,7 +48,7 @@ Bei theoretischen Fächern, bei Fragen mit langen Antworten in eigenen Worten, b
 
 ### Beispiel: EMF 1 (Elektromagnetische Felder)
 
-[`examples/emf1/`](examples/emf1/) enthält eine fertige Mindmap mit 9 Aufgabenseiten, 33 Konzepten und 6 eigenen 3D-Figuren. Zum Ausprobieren das Repo klonen und `examples/emf1/index.html` im Browser öffnen. Internet ist dafür nicht nötig.
+[`examples/emf1/`](examples/emf1/) enthält eine fertige Mindmap mit 9 Aufgabenseiten, 33 Konzepten und 6 eigenen 3D-Figuren. Ausprobieren direkt im Browser in der **[Live-Demo](https://mowolf7.github.io/amo-skills/)**, oder das Repo klonen und `examples/emf1/index.html` öffnen. Die lokale Kopie braucht kein Internet.
 
 | Mindmap (dunkel) | Aufgabenseite |
 |---|---|
@@ -95,7 +97,7 @@ skills/mindmaphtml/
     vendor/               # eingebettete Bibliotheken mit ihren Lizenzen
 examples/emf1/            # fertiges Offline-Beispiel (Mindmap + 9 Aufgabenseiten)
 docs/                     # Screenshots für diese README
-.github/workflows/        # automatische Prüfung bei jedem Pull Request
+.github/workflows/        # automatische Prüfung und Live-Demo
 CHANGELOG.md              # Versionsverlauf
 ```
 
