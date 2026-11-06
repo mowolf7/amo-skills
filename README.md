@@ -31,6 +31,7 @@ Then ask Claude for a mind map, for example: *"mindmaphtml for my course, here a
 - **Uses fewer tokens.** Uploaded material (PDF, Word, slides, spreadsheets …) is converted to Markdown once at the start. After that Claude searches and reads only the parts it needs instead of opening the originals again and again. This makes long sessions cheaper and the answers more precise.
 - **Fits any subject.** Where 3D helps, you get 3D models and figures. Where it does not, you get simulations of the solution path, more exercise types and a mini quiz per concept instead.
 - **Checked solutions.** Every solution is compared with the official model solution when one exists, and checked independently (symbolically or numerically).
+- **Real 3D models where they exist.** A checked list of open-licensed model sources per field ([`sources.md`](skills/mindmaphtml/sources.md)), starting with medicine: real bones, muscles, organs, vessels and nerves instead of hand-drawn shapes, with credits added automatically.
 - **Same look every time.** Design and code come from a fixed template; only the content is new.
 
 ### What you get
@@ -93,6 +94,7 @@ The libraries in the generated pages ([d3](https://d3js.org) 7.8.5, [Three.js](h
   plugin.json             # plugin manifest
 skills/mindmaphtml/
   SKILL.md                # instructions Claude follows
+  sources.md              # checked open 3D model sources per field
   template/               # fixed building blocks (HTML, JS, build, offline + test scripts)
     vendor/               # embedded libraries with their licenses
 examples/emf1/            # finished offline example (mind map + 9 exercise pages)

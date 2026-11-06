@@ -5,6 +5,7 @@ All notable changes to this marketplace. Versions follow [Semantic Versioning](h
 ## Unreleased
 
 - Live demo of the EMF-1 example on GitHub Pages: https://mowolf7.github.io/amo-skills/
+- `sources.md`: checked open 3D model sources per field, starting with medicine (lucgrn3/anatomy-models for bones, muscles and ligaments; BodyParts3D for organs, vessels and nerves), with usage and attribution rules. The skill checks this list before building figures by hand.
 
 ## 1.0.0
 
