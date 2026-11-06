@@ -31,6 +31,7 @@ Danach Claude um eine Mindmap bitten, zum Beispiel: *„mindmaphtml für mein Fa
 - **Spart Tokens.** Hochgeladenes Material (PDF, Word, Folien, Tabellen …) wird am Anfang einmal in Markdown umgewandelt. Danach sucht und liest Claude nur die Stellen, die gebraucht werden, statt die Originale immer wieder komplett zu öffnen. Lange Sitzungen werden dadurch günstiger und die Antworten genauer.
 - **Passt zu jedem Fach.** Wo 3D hilft, gibt es 3D-Modelle und -Figuren. Wo nicht, gibt es stattdessen Simulationen des Lösungswegs, mehr Aufgabentypen und ein Mini-Quiz pro Konzept.
 - **Geprüfte Lösungen.** Jede Lösung wird mit der Musterlösung abgeglichen, wenn es eine gibt, und zusätzlich unabhängig geprüft (symbolisch oder numerisch).
+- **Echte 3D-Modelle, wo es sie gibt.** Eine geprüfte Liste offen lizenzierter Modell-Quellen pro Fach ([`sources.md`](skills/mindmaphtml/sources.md)), zuerst Medizin: echte Knochen, Muskeln, Organe, Gefäße und Nerven statt selbst gezeichneter Formen, mit automatischer Quellenangabe.
 - **Immer gleiches Design.** Aussehen und Code kommen aus einer festen Vorlage, nur der Inhalt ist neu.
 
 ### Was du bekommst
@@ -93,6 +94,7 @@ Die Bibliotheken der fertigen Seiten ([d3](https://d3js.org) 7.8.5, [Three.js](h
   plugin.json             # Plugin-Manifest
 skills/mindmaphtml/
   SKILL.md                # Anleitung, der Claude folgt
+  sources.md              # geprüfte offene 3D-Modell-Quellen pro Fach
   template/               # feste Bausteine (HTML, JS, Build-, Offline- und Test-Skripte)
     vendor/               # eingebettete Bibliotheken mit ihren Lizenzen
 examples/emf1/            # fertiges Offline-Beispiel (Mindmap + 9 Aufgabenseiten)
