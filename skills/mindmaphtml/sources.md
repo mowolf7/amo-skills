@@ -37,9 +37,45 @@ Checked sources of ready-made 3D models that mind maps can use instead of drawin
 - Both in one figure is fine: they are both ShareAlike, and the page is shared under CC BY-SA 4.0 with both attribution lines.
 - If neither source has a structure, build the figure by hand as usual with `figb.js` and say so in the legend.
 
-## Fields still to add
+## Biochemistry
 
-Further fields (for example chemistry, biology, geography and geology, engineering) are added here one at a time after their sources have been checked.
+| Source | What's in it | Format | License | Assessment |
+|---|---|---|---|---|
+| [RCSB Protein Data Bank](https://www.rcsb.org/pages/usage-policy) | Experimentally determined 3D structures of proteins, nucleic acids and complexes (enzymes, haemoglobin, DNA, ribosome, ATP synthase …), one entry per PDB ID | mmCIF / PDB, one file per structure (`https://files.rcsb.org/download/<ID>.cif`) | **CC0 1.0** (public domain dedication). Attribution of the original authors and the RCSB PDB is requested, not required. | ⭐ Best for proteins and other macromolecules. |
+| [PubChem](https://pubchem.ncbi.nlm.nih.gov) 3D conformers | Computed 3D structures of small molecules (sugars, amino acids, nucleotides, lipids, vitamins, drugs), one per compound ID (CID) | SDF, one file per CID (`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/<CID>/SDF?record_type=3d`) | **Public domain**: the 3D conformers are computed by PubChem itself (source "PubChem" on the record), and NLM states that information created by or for the US government is public domain; NLM asks to be acknowledged. | ⭐ Best for small molecules. |
+
+### How to use them
+
+**RCSB PDB: proteins and macromolecules**
+- Download only the structures a topic needs, by PDB ID. Use model 1 only.
+- Simplified view that stays small: the Cα backbone of each chain as a tube (one colour per chain), plus important hetero groups (for example haem `HEM`, ligands, cofactors) as ball-and-stick. Bonds of hetero groups are found by atom distance.
+- Do not use RCSB website text, Molecule of the Month articles or other site content: those are copyrighted or under other terms. Only the structure data files are CC0.
+- Attribution line: `Structure: PDB <ID> (<first authors from _audit_author>), RCSB Protein Data Bank, CC0 1.0. Simplified.`
+
+**PubChem: small molecules**
+- Download the 3D SDF by CID. Use only the 3D coordinates and bonds; do not copy descriptions, names or other annotations from third-party data sources on PubChem, which can carry their own licenses.
+- Ball-and-stick with standard element colours (C grey, H white, O red, N blue, P orange, S yellow, metals brown); double bonds as two sticks.
+- Group labels (for example "Adenin", "Ribose", "Triphosphat") can be placed automatically from the bonds.
+- Check the exact compound: some CIDs leave stereochemistry or the anomer open (for example CID 5793 is D-glucose without a fixed anomer). Name figures accordingly or choose a more specific CID.
+- Attribution line: `3D structure: PubChem, National Library of Medicine (NLM), CID <CID>, public domain.`
+
+## Course overview and fields still to add
+
+Course overview (medical studies). Courses without 3D use the skill's non-3D mode (simulations, more exercise types, mini quiz) and only need the student's own material.
+
+| Course | 3D useful? | Sources | Status |
+|---|---|---|---|
+| Anatomy | yes | lucgrn3/anatomy-models, BodyParts3D | ✅ checked and tested (knee, heart). Open: heart chambers need BodyParts3D 4.0 from the original server. |
+| Descriptive Biochemistry | yes | RCSB PDB, PubChem | ✅ checked and tested (glucose, ATP, haemoglobin). |
+| Biocell (cell biology) | yes | none found yet; PDB covers molecular machines | ⬜ Open: no scientific open repository for organelles found; single CC BY models exist but are heavy and must be checked one by one. |
+| Physiology | partly | anatomy sources above; optional PhET, OpenStax figures | ⬜ Open: PhET and OpenStax licences need a direct check (terms changed recently). |
+| Biophysics | yes, self-built | none needed (figures built like the EMF example) | ✅ Covered. |
+| Biostatistics | no | optional open datasets (OpenIntro) or own synthetic data | ✅ Covered by non-3D mode. |
+| Behavioral Science | no | student's material | ✅ Covered by non-3D mode. |
+| Bioethics | no | student's material; open casebooks found are NonCommercial and therefore excluded | ✅ Covered by non-3D mode (own cases). |
+| First Aid | partly | anatomy sources above; guideline content from the student's course (IFRC guidelines are copyrighted) | ✅ Covered; follow the guideline version the course uses. |
+
+Build-time tools that were used for the tests are in `template/sources/` (`gltf_extract.mjs`, `stl_simplify.mjs`, `pack_mesh.py`, `pack_molecule.py`; Node packages in `package.json`). They are prototypes and are adapted per topic.
 
 ## Adding a source
 
