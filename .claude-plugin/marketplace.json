@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Claude Code skills for interactive study material",
-    "version": "1.1.0"
+    "version": "1.1.1"
   },
   "plugins": [
     {
       "name": "amo-skills",
       "source": "./",
       "description": "Interactive HTML learning mind maps with 3D figures and worked exercise pages (mindmaphtml)",
-      "version": "1.1.0"
+      "version": "1.1.1"
     }
   ]
 }

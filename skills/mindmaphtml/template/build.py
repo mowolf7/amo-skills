@@ -7,6 +7,8 @@ import re,sys,json,os
 here=os.path.dirname(os.path.abspath(__file__))
 data_p,pages,style,out=sys.argv[1:5]
 s=open(os.path.join(pages,style),encoding='utf-8').read()
+if ':root{' not in s:  # Stil-Seite bindet page_style.css nur ein: Stil aus der gemeinsamen Datei nehmen
+    s=open(os.path.join(here,'page_style.css'),encoding='utf-8').read()
 css=s[s.index(':root{'):s.index('.tabs,.seg')]
 reuse='\n'.join(re.findall(r'^\.(?:fr|memo|warn|btn)\b[^{]*\{[^}]*\}',s,re.M))
 data=open(data_p,encoding='utf-8').read()
@@ -22,6 +24,9 @@ t=src('tpl.html')
 for k,v in {'/*BASECSS*/':css,'/*REUSECSS*/':reuse,'/*DATA*/':data,'/*MAP*/':src('map.js'),'/*PANEL*/':src('panel.js'),'/*FIGB*/':src('figb.js'),'/*FIG*/':src('fig.js'),'/*NET3D*/':src('net3d.js')}.items():
     t=t.replace(k,v)
 # Immer offline: Bibliotheken aus vendor/ einbetten, Web-Schriften entfernen, Rest prüfen
+# Titel im Browser-Tab und im Artifact aus meta.title (statt des Vorlagen-Titels)
+m=re.search(r"title:'([^']+)'",data)
+if m:t=re.sub(r'<title>.*?</title>','<title>'+m.group(1).replace('&','&amp;').replace('<','&lt;')+'</title>',t,count=1)
 sys.path.insert(0,here);import offline
 t=offline.make_offline(t);ext=offline.external(t)
 open(out,'w',encoding='utf-8').write(t);print('ok',out,len(t),'Bytes, Einleitungen:',sum(1 for x in ledes.values() if x))
