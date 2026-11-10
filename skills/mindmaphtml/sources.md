@@ -59,6 +59,28 @@ Checked sources of ready-made 3D models that mind maps can use instead of drawin
 - Check the exact compound: some CIDs leave stereochemistry or the anomer open (for example CID 5793 is D-glucose without a fixed anomer). Name figures accordingly or choose a more specific CID.
 - Attribution line: `3D structure: PubChem, National Library of Medicine (NLM), CID <CID>, public domain.`
 
+## Cell biology
+
+No open source with ready-made organelle models was found that fits the rules: the Allen Cell Explorer is non-commercial only (excluded), NIH 3D and cellPACK have unclear licences per model, and EMDB (CC0) offers raw density maps rather than usable models. So cell biology uses two things:
+
+| Source | What's in it | Format | License | Assessment |
+|---|---|---|---|---|
+| Own schematic figures (`figb.js` style) | Organelles and cell structures: nucleus, mitochondrion, ER, Golgi, lysosome, membrane bilayer, cytoskeleton, cell junctions | built in Three.js, no download | none needed | ⭐ Best for organelles: light, clear, no licence questions. Mark them "own schematic figure, not to scale". |
+| [RCSB Protein Data Bank](https://www.rcsb.org/pages/usage-policy) (see Biochemistry) | Molecular machines of the cell | mmCIF per PDB ID | CC0 1.0 | ⭐ Best for molecular machines. |
+
+### How to use them
+
+- **Organelles:** build them as schematic figures with the usual helpers (labelled axes, labels in white boxes, strong colours). A cut-away view (half shells) shows inner structures, for example a mitochondrion's outer and inner membrane, cristae, matrix, mtDNA and ribosomes.
+- **Molecular machines from the PDB:** same pipeline as in Biochemistry. Colour chains by subunit (entity), orient the complex along its functional axis and label the parts. Checked example IDs:
+  - `5ARA` bovine mitochondrial ATP synthase (tested: F1 head, γ rotor, c-ring, peripheral stalk)
+  - `1J4N` aquaporin-1 water channel
+  - `3WGU` Na⁺/K⁺-ATPase
+  - `1JFF` α/β-tubulin (microtubules)
+  - `6KN8` human cardiac thin filament (actin, tropomyosin, troponin)
+  - `1AON` GroEL/GroES chaperonin
+  - `4V6X` human 80S ribosome and `7R5J` human nuclear pore complex: very large; use only the parts needed, and use phosphorus atoms instead of Cα for RNA.
+- Attribution line for PDB structures: as in Biochemistry. Own figures: `Own schematic figure, not to scale.`
+
 ## Course overview and fields still to add
 
 Course overview (medical studies). Courses without 3D use the skill's non-3D mode (simulations, more exercise types, mini quiz) and only need the student's own material.
@@ -67,7 +89,7 @@ Course overview (medical studies). Courses without 3D use the skill's non-3D mod
 |---|---|---|---|
 | Anatomy | yes | lucgrn3/anatomy-models, BodyParts3D | ✅ checked and tested (knee, heart). Open: heart chambers need BodyParts3D 4.0 from the original server. |
 | Descriptive Biochemistry | yes | RCSB PDB, PubChem | ✅ checked and tested (glucose, ATP, haemoglobin). |
-| Biocell (cell biology) | yes | none found yet; PDB covers molecular machines | ⬜ Open: no scientific open repository for organelles found; single CC BY models exist but are heavy and must be checked one by one. |
+| Biocell (cell biology) | yes | own schematic figures + RCSB PDB | ✅ checked and tested (mitochondrion, ATP synthase, lipid bilayer). No open organelle model library found. |
 | Physiology | partly | anatomy sources above; optional PhET, OpenStax figures | ⬜ Open: PhET and OpenStax licences need a direct check (terms changed recently). |
 | Biophysics | yes, self-built | none needed (figures built like the EMF example) | ✅ Covered. |
 | Biostatistics | no | optional open datasets (OpenIntro) or own synthetic data | ✅ Covered by non-3D mode. |
