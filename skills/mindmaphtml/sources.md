@@ -81,6 +81,25 @@ No open source with ready-made organelle models was found that fits the rules: t
   - `4V6X` human 80S ribosome and `7R5J` human nuclear pore complex: very large; use only the parts needed, and use phosphorus atoms instead of Cα for RNA.
 - Attribution line for PDB structures: as in Biochemistry. Own figures: `Own schematic figure, not to scale.`
 
+## Physiology
+
+Physiology mostly needs processes, not shapes: membrane potentials, blood pressure, ventilation, filtration, hormone feedback. These are built as **own simulations** (sliders, live curves, step-by-step calculation), like the exercise pages of the EMF example. Organs come from the anatomy sources above.
+
+| Source | What's in it | Format | License | Assessment |
+|---|---|---|---|---|
+| Own simulations and figures | Processes and curves (action potential, Frank-Starling, pressure-volume loops, diffusion, feedback loops) | built in the page, no download | none needed | ⭐ Default for physiology. |
+| Anatomy sources (see above) | Organs, vessels, nerves, bones and muscles | see Medicine and anatomy | CC BY-SA | ⭐ For the structures behind a process. |
+| [PhET](https://phet.colorado.edu/en/licensing/html) simulations, **historical HTML versions only** | Interactive simulations (for example neuron, diffusion, gas properties) | HTML file per simulation | **CC BY 4.0** for "Regular HTML Simulation Files published prior to March 29, 2026"; commercial use allowed | Optional. Newer versions (after 29 March 2026), interoperable files and Java/Flash versions are under other terms and are **not** used. |
+
+### How to use them
+
+- **Own simulations:** default. The numbers in the simulation and in the exam solution come from the same function (see the exercise page rules in `SKILL.md`).
+- **PhET (optional):** only a historical HTML version published before 29 March 2026; note its version. Ship it as its own file next to the exercise page (do not merge it into our page), so the page stays light and the simulation stays unchanged. Put this attribution next to the link to it, unchanged except for translation: `Simulation by PhET Interactive Simulations, University of Colorado Boulder, licensed under CC BY 4.0 (https://phet.colorado.edu).` Do not use the PhET name or logo for anything promotional.
+
+### Checked and excluded
+
+- **OpenStax** textbooks (for example Anatomy and Physiology 2e): the book now states **CC BY-NC-SA 4.0**, including its images, and OpenStax asks for permission before its content is used in AI offerings. Non-commercial, so not used, and their text or figures are not copied into mind maps.
+
 ## Course overview and fields still to add
 
 Course overview (medical studies). Courses without 3D use the skill's non-3D mode (simulations, more exercise types, mini quiz) and only need the student's own material.
@@ -90,10 +109,10 @@ Course overview (medical studies). Courses without 3D use the skill's non-3D mod
 | Anatomy | yes | lucgrn3/anatomy-models, BodyParts3D | ✅ checked and tested (knee, heart). Open: heart chambers need BodyParts3D 4.0 from the original server. |
 | Descriptive Biochemistry | yes | RCSB PDB, PubChem | ✅ checked and tested (glucose, ATP, haemoglobin). |
 | Biocell (cell biology) | yes | own schematic figures + RCSB PDB | ✅ checked and tested (mitochondrion, ATP synthase, lipid bilayer). No open organelle model library found. |
-| Physiology | partly | anatomy sources above; optional PhET, OpenStax figures | ⬜ Open: PhET and OpenStax licences need a direct check (terms changed recently). |
+| Physiology | partly | own simulations + anatomy sources; optional PhET (historical HTML only, CC BY 4.0) | ✅ checked. OpenStax excluded (now CC BY-NC-SA). |
 | Biophysics | yes, self-built | none needed (figures built like the EMF example) | ✅ Covered. |
 | Biostatistics | no | optional open datasets (OpenIntro) or own synthetic data | ✅ Covered by non-3D mode. |
-| Behavioral Science | no | student's material | ✅ Covered by non-3D mode. |
+| Behavioral Science | no | student's material (OpenStax books are now CC BY-NC-SA and therefore excluded) | ✅ Covered by non-3D mode. |
 | Bioethics | no | student's material; open casebooks found are NonCommercial and therefore excluded | ✅ Covered by non-3D mode (own cases). |
 | First Aid | partly | anatomy sources above; guideline content from the student's course (IFRC guidelines are copyrighted) | ✅ Covered; follow the guideline version the course uses. |
 
