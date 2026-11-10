@@ -4,6 +4,7 @@ All notable changes to this marketplace. Versions follow [Semantic Versioning](h
 
 ## Unreleased
 
+- At the start of every new request the skill asks for the delivery format (online link or ZIP of offline HTML) and recommends one per device.
 - Live demo of the EMF-1 example on GitHub Pages: https://mowolf7.github.io/amo-skills/
 - `sources.md`: checked open 3D model sources per field, starting with medicine (lucgrn3/anatomy-models for bones, muscles and ligaments; BodyParts3D for organs, vessels and nerves) and biochemistry (RCSB PDB for proteins, PubChem for small molecules), plus prototype build tools in `template/sources/`, with usage and attribution rules. The skill checks this list before building figures by hand.
 

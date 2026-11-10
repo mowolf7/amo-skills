@@ -32,6 +32,7 @@ Danach Claude um eine Mindmap bitten, zum Beispiel: *„mindmaphtml für mein Fa
 - **Passt zu jedem Fach.** Wo 3D hilft, gibt es 3D-Modelle und -Figuren. Wo nicht, gibt es stattdessen Simulationen des Lösungswegs, mehr Aufgabentypen und ein Mini-Quiz pro Konzept.
 - **Geprüfte Lösungen.** Jede Lösung wird mit der Musterlösung abgeglichen, wenn es eine gibt, und zusätzlich unabhängig geprüft (symbolisch oder numerisch).
 - **Echte 3D-Modelle, wo es sie gibt.** Eine geprüfte Liste offen lizenzierter Modell-Quellen pro Fach ([`sources.md`](skills/mindmaphtml/sources.md)), zuerst Medizin: echte Knochen, Muskeln, Organe, Gefäße und Nerven statt selbst gezeichneter Formen, mit automatischer Quellenangabe.
+- **Geliefert, wie dein Gerät es braucht.** Zu Beginn jeder Anfrage fragt Claude, ob du einen Online-Link oder eine ZIP mit Offline-HTML-Dateien möchtest, und empfiehlt eins passend zum Gerät (Online-Link für iPad, iPhone und Android; ZIP für Laptop und PC).
 - **Immer gleiches Design.** Aussehen und Code kommen aus einer festen Vorlage, nur der Inhalt ist neu.
 
 ### Was du bekommst

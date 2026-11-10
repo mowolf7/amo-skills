@@ -32,6 +32,7 @@ Then ask Claude for a mind map, for example: *"mindmaphtml for my course, here a
 - **Fits any subject.** Where 3D helps, you get 3D models and figures. Where it does not, you get simulations of the solution path, more exercise types and a mini quiz per concept instead.
 - **Checked solutions.** Every solution is compared with the official model solution when one exists, and checked independently (symbolically or numerically).
 - **Real 3D models where they exist.** A checked list of open-licensed model sources per field ([`sources.md`](skills/mindmaphtml/sources.md)), starting with medicine: real bones, muscles, organs, vessels and nerves instead of hand-drawn shapes, with credits added automatically.
+- **Delivered the way your device needs it.** At the start of every request Claude asks whether you want an online link or a ZIP of offline HTML files, and recommends one for your device (online link for iPad, iPhone and Android; ZIP for laptops and PCs).
 - **Same look every time.** Design and code come from a fixed template; only the content is new.
 
 ### What you get
