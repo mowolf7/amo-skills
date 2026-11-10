@@ -2,7 +2,7 @@
 
 All notable changes to this marketplace. Versions follow [Semantic Versioning](https://semver.org).
 
-## Unreleased
+## 1.1.0 (in testing)
 
 - At the start of every new request the skill asks for the delivery format (online link or ZIP of offline HTML) and recommends one per device.
 - Live demo of the EMF-1 example on GitHub Pages: https://mowolf7.github.io/amo-skills/
