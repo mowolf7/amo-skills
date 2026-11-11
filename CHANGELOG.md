@@ -2,7 +2,7 @@
 
 All notable changes to this marketplace. Versions follow [Semantic Versioning](https://semver.org).
 
-## 1.1.1 (in testing)
+## 1.1.1
 
 - Fewer tokens per mind map, same quality: shared `page_engine.js` and `page_style.css` are included instead of rewritten on every exercise page (the page template shrank from 29 KB to 8 KB); one engine file per topic; exercise pages built as sub-tasks where available; finished files are never read back; short test output.
 - The start question also offers the size: Full (6–8 exercise pages, default) or Compact (3–4).
