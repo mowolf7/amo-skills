@@ -65,7 +65,7 @@ Der Skill hält **Design und Code fest** und schreibt den **Inhalt jedes Mal neu
 | Layout, Farben, Schriften, Hell/Dunkel | Themen, Konzepte, Formeln, Erklärungen, Fallen |
 | Karte, Seitenfenster, Quiz und 3D-Technik (`map.js`, `panel.js`, `fig.js`, `net3d.js`) | Aufgabenseiten mit 3D-Modell oder Simulation, Übungen und Lösung |
 | 3D-Hilfsfunktionen: Achsen, Beschriftungen, Kamera (`figb.js`) | Alle 3D-Figuren bzw. Quizze zum neuen Fach |
-| Build- und Offline-Skript (`build.py`, `offline.py`), gemeinsame Seiten-Engine und Stil (`page_engine.js`, `page_style.css`), Seitengerüste, Sprungmarken-Snippet | `data.js` (der ganze Inhalt der Karte) |
+| Build- und Offline-Skript (`build.py`, `offline.py`), Seitengerüste, Sprungmarken-Snippet | `data.js` (der ganze Inhalt der Karte) |
 
 `build.py` fügt Vorlage, Daten und den Stil einer Aufgabenseite zu **einer offline nutzbaren HTML-Datei** zusammen. `offline.py` macht die Aufgabenseiten offline-fähig und meldet alles, was noch aus dem Internet käme:
 

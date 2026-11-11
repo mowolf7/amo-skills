@@ -7,8 +7,6 @@ import re,sys,json,os
 here=os.path.dirname(os.path.abspath(__file__))
 data_p,pages,style,out=sys.argv[1:5]
 s=open(os.path.join(pages,style),encoding='utf-8').read()
-if ':root{' not in s:  # Stil-Seite bindet page_style.css nur ein: Stil aus der gemeinsamen Datei nehmen
-    s=open(os.path.join(here,'page_style.css'),encoding='utf-8').read()
 css=s[s.index(':root{'):s.index('.tabs,.seg')]
 reuse='\n'.join(re.findall(r'^\.(?:fr|memo|warn|btn)\b[^{]*\{[^}]*\}',s,re.M))
 data=open(data_p,encoding='utf-8').read()

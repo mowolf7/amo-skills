@@ -30,7 +30,7 @@ Mindmap und Aufgaben-Seiten müssen **ohne Internet** funktionieren: alle Biblio
 - Aufbau jeder Aufgaben-Seite (siehe „Aufgaben-Seiten“ unten)
 - 3D-Standard jeder Figur und jedes Modells (wo 3D benutzt wird): kräftige, kontrastreiche Farben (hell und dunkel sichtbar), beschriftetes x-y-z-Koordinatensystem, z nach oben, Beschriftungen als Sprites mit weißem Kästchen, Kamera der Mini-Figuren etwa bei (2.9, 2.3, 3.8)
 
-Dieser Standard steckt in den Bausteinen im Ordner `template/` neben dieser Datei (`tpl.html`, `map.js`, `panel.js`, `fig.js`, `net3d.js`, `build.py`, `offline.py`, `page_style.css`, `page_engine.js`, den Hilfsfunktionen in `figb.js` für Achsen, Beschriftungen, Kamera, und den Seitengerüsten `aufgabe_muster.html` und `aufgabe_muster_ohne3d.html`). Er wird übernommen, nicht neu programmiert und nicht in den Chat ausgegeben. Das spart Tokens.
+Dieser Standard steckt in den Bausteinen im Ordner `template/` neben dieser Datei (`tpl.html`, `map.js`, `panel.js`, `fig.js`, `net3d.js`, `build.py`, `offline.py`, den Hilfsfunktionen in `figb.js` für Achsen, Beschriftungen, Kamera, und den Seitengerüsten `aufgabe_muster.html` und `aufgabe_muster_ohne3d.html`). Er wird übernommen, nicht neu programmiert und nicht in den Chat ausgegeben. Das spart Tokens.
 
 **Ist bei jeder neuen Mindmap komplett neu:**
 - alle Inhalte: Titel, Bereiche, Themen, Konzepte, Formeln, Erklärungen, Fallen, Merksätze, Analogien (`data.js`)
@@ -49,7 +49,7 @@ Nicht jedes Fach braucht 3D. Bei theoretischen Fächern, bei Fragen mit langen A
 - Gemischt ist erlaubt: Themen mit räumlichem Bezug bekommen 3D, die anderen Simulation und Quiz. Das Kennzeichen am Themen-Kästchen der Karte passt man mit `badge` an (Standard „3D“).
 - Der Qualitätsmaßstab bleibt gleich: Jede Übung hat eine Erklärung zur richtigen Antwort, die Zahlen in Simulation und Klausurlösung kommen aus derselben Funktion.
 
-## Zu Beginn jeder neuen Anfrage: Lieferform und Umfang erfragen
+## Zu Beginn jeder neuen Anfrage: Lieferform erfragen
 
 Nicht jeder Nutzer hat einen Laptop. Deshalb **bei jeder neuen Anfrage, einmal ganz am Anfang** (zusammen mit der Planung in Schritt 1, nicht später noch einmal) fragen, wie das Ergebnis geliefert werden soll, und eine Empfehlung passend zum Gerät geben:
 
@@ -61,21 +61,10 @@ Nicht jeder Nutzer hat einen Laptop. Deshalb **bei jeder neuen Anfrage, einmal g
 | Chromebook | **Online-Link** (ZIP geht auch) | Lokale Dateien funktionieren, der Link ist aber einfacher. |
 | Mehrere Geräte oder Weitergabe an Kommilitonen | **beides** | Link zum schnellen Öffnen, ZIP als Sicherung ohne Internet. |
 
-- In derselben Frage den **Umfang** anbieten: **Voll (6–8 Aufgaben-Seiten, Standard)** für die Klausurvorbereitung oder **Kompakt (3–4 Aufgaben-Seiten)** für einen schnellen Überblick oder wenn das Nutzungslimit knapp ist. Ohne Antwort: Voll. Kompakt heißt weniger Seiten, nicht weniger Qualität pro Seite; erweitern geht später.
 - Die Frage kurz halten und das Gerät erfragen, falls es nicht bekannt ist. Hat der Nutzer die Lieferform in derselben Anfrage schon genannt, nicht noch einmal fragen.
 - **Online-Link:** als **privates** Artifact veröffentlichen (Mindmap als Seite, Aufgaben-Seiten als `files` daneben). Der Link ist zunächst nur für den Nutzer sichtbar; teilen kann er ihn selbst. Ist kein Veröffentlichungs-Werkzeug verfügbar, das offen sagen und das ZIP liefern.
 - **ZIP:** alle offline gemachten Dateien in einen Ordner, gezippt (z. B. `<Fach>_Mindmap.zip`). Im Ordner eine kurze `LIESMICH.txt`: erst entpacken, dann `00_…_Mindmap.html` öffnen (direkt aus dem ZIP heraus funktionieren die Links zwischen den Seiten nicht).
 - Beide Varianten enthalten dieselben Dateien: Auch die Online-Version lädt nichts nach und funktioniert nach dem Speichern offline.
-
-## Sparsam mit Tokens arbeiten
-
-Eine volle Mindmap ist viel Arbeit. Die Qualität bleibt gleich, aber Folgendes ist Pflicht:
-- **Standard-Code nie neu schreiben.** Gemeinsames CSS (`page_style.css`) und die Lern-Engine (`page_engine.js`) werden in jeder Aufgaben-Seite nur eingebunden (`<link rel="stylesheet" href="page_style.css">`, `<script src="page_engine.js"></script>`); `offline.py` bettet sie am Ende ein. Jede Seite enthält nur ihren eigenen Inhalt und Code.
-- **Eine Engine pro Thema.** Code, den mehrere Seiten eines Themas brauchen (zum Beispiel ein 3D-Gelenkmodell mit Bewegungen), einmal als eigene Datei schreiben (`<thema>_engine.js`) und per `<script src>` einbinden; `offline.py` bettet auch sie ein.
-- **Aufgaben-Seiten in Teilaufgaben bauen**, wenn ein Werkzeug für Sub-Agenten verfügbar ist: eine Teilaufgabe pro Seite, mit fester Vorgabe (Thema, Quelle, Schrittnummern, Engine-Dateien, Seitengerüst). Die Teilaufgabe meldet nur Dateiname und eine kurze Zusammenfassung zurück, nicht den Code. So bleibt das Hauptgespräch klein, und jeder weitere Schritt wird günstiger. Am Ende im Hauptgespräch die Seiten gemeinsam testen, damit sie einheitlich sind.
-- **Fertige Dateien nie lesen.** Nach `build.py`/`offline.py` ist jede Seite durch die eingebetteten Bibliotheken mehrere hundert KB groß. Nur die Quelldateien lesen und bearbeiten; den Rest mit Tests prüfen.
-- **Vorlagen gezielt lesen:** nur das Gerüst, das gebraucht wird, und daraus nur die nötigen Teile. `vendor/` nie lesen.
-- **Kurze Test-Ausgaben:** Tests geben nur Fehler und eine Zusammenfassung aus, keine kompletten Protokolle.
 
 ## Fertige 3D-Modelle aus offenen Quellen
 
@@ -86,7 +75,7 @@ Für manche Fächer gibt es geprüfte, frei lizenzierte 3D-Modelle, zum Beispiel
 
 ## Aufgaben-Seiten (Standard-Aufbau wie EMF-1)
 
-Jede Aufgabe ist eine eigene HTML-Seite im Gerüst von `template/aufgabe_muster_ohne3d.html` (kurz, bindet `page_style.css` und `page_engine.js` ein) oder, für den Aufbau einer Seite mit 3D-Modell, nach dem Beispiel `template/aufgabe_muster.html`. Auch Seiten mit 3D binden `page_style.css` und `page_engine.js` ein, statt CSS und Engine zu kopieren. Design, Abschnitte, Klassen und IDs bleiben gleich, der Inhalt ist neu:
+Jede Aufgabe ist eine eigene HTML-Seite im Gerüst von `template/aufgabe_muster.html` (mit 3D) oder `template/aufgabe_muster_ohne3d.html` (ohne 3D). Design, Abschnitte, Klassen und IDs bleiben gleich, der Inhalt ist neu:
 
 1. **Kopf:** Titel und `class="lede"` mit der Aufgabenstellung in Alltagssprache: was gegeben ist, was gesucht ist, welcher Ansatz passt und warum (z. B. „Gauß hilft hier nicht, weil …“).
 2. **Interaktives 3D-Modell** der Aufgabe mit Bedienhinweis (ziehen = drehen, Mausrad = zoomen, rechts ziehen = verschieben), Auto-Drehen, Ansicht zurücksetzen, Legende; bei mehreren Fällen Tabs (`div.tabs`). **Ohne 3D:** Simulation des Rechen- oder Denkwegs (`section.stage.sim`), gesperrt bis die Vorhersagen getippt sind.
@@ -131,22 +120,20 @@ Alle Bausteine liegen im Ordner `template/` neben dieser `SKILL.md`. Nur diese V
 - `fig.js` hängt eine Figur ins Seitenfenster und räumt beim Wechsel auf
 - `net3d.js` Knopf „3D-Ansicht“: dasselbe Netz in 3D (Three.js r128 + OrbitControls)
 - `build.py` baut alles zu EINER offline nutzbaren Datei: `python3 -I build.py <data.js> <Seitenordner> <Stil-Seite> <Ausgabe.html>`. Übernimmt Farben, Schriften, Hell/Dunkel, Bruch `.fr`, `.warn`, `.memo`, `.btn` 1:1 aus der Stil-Seite und die `class="lede"`-Einleitungen aus den verlinkten Seiten, bettet die Bibliotheken ein
-- `offline.py` macht fertige Aufgaben-Seiten eigenständig und offline nutzbar: `python3 -I offline.py <Seite.html> …` (bettet Bibliotheken und lokale Bausteine wie `page_engine.js`, `page_style.css` und Themen-Engines ein, entfernt Web-Schriften, meldet alles, was noch aus dem Netz käme oder fehlt)
+- `offline.py` macht fertige Aufgaben-Seiten offline nutzbar: `python3 -I offline.py <Seite.html> …` (bettet Bibliotheken ein, entfernt Web-Schriften, meldet alles, was noch aus dem Netz käme)
 - `vendor/` d3 7.8.5, Three.js r128 und OrbitControls mit Lizenzen (wird eingebettet, nicht lesen)
 - `sources.md` (liegt neben `SKILL.md`, nicht in `template/`): geprüfte offene 3D-Modell-Quellen nach Fach, mit Lizenz, Nutzung und Quellenangabe
 - `data_beispiel_EMF1.js` vollständiges Datenbeispiel (nur als Muster für die Form, nicht für den Inhalt)
 - `aufgabe_muster.html` fertige Aufgaben-Seite mit 3D als Gerüst und Stil-Quelle
-- `page_style.css` gemeinsames CSS aller Aufgaben-Seiten (mit und ohne 3D); nur einbinden
-- `page_engine.js` gemeinsame Lern-Engine aller Aufgaben-Seiten: `predict`, `proof`, `solution`, `practice`, `mc`, `match`, `cloze`, `order`, `freetext`, `slider`, `seg`; nur einbinden
-- `aufgabe_muster_ohne3d.html` kurzes Seitengerüst (bindet die beiden Dateien ein), Aufgaben-Seite ohne 3D: Simulation, Vorhersagen, Üben (Multiple Choice, Zuordnen, Lückentext, Reihenfolge, Freitext), Klausurlösung; Inhalt sind Platzhalter
+- `aufgabe_muster_ohne3d.html` Aufgaben-Seite ohne 3D: Simulation, Vorhersagen, Üben (Multiple Choice, Zuordnen, Lückentext, Reihenfolge, Freitext), Klausurlösung; Inhalt sind Platzhalter
 - `sprungmarke_snippet.html` wird ans Ende jeder Aufgaben-Seite gehängt (in beiden Mustern schon enthalten)
 - `test_komplett.js` + `test_route.js` Playwright-Test. `test_route.js` blockt jede Anfrage ins Netz, so zeigt der Test auch, dass alles offline läuft. Seiten in `pages/`, Dateiname der Mindmap im Skript anpassen
 
 ## Ablauf (immer in dieser Reihenfolge)
 
 0. **Material in Markdown umwandeln** (Abschnitt oben), bevor irgendetwas gelesen oder geplant wird.
-1. **Verstehen und planen, bevor gebaut wird.** Kurz bestätigen, welches Fach/Thema die Mindmap abdeckt und welches Material es gibt. In derselben Nachricht nach **Lieferform** (Online-Link oder ZIP, mit Empfehlung je Gerät) und **Umfang** (Voll oder Kompakt) fragen; siehe oben. Entscheiden, wo 3D passt und wo Simulation und Quiz besser sind. Liste der geplanten Aufgaben (Titel + Quelle + mit/ohne 3D) nennen.
-2. **Aufgaben-Seiten bauen** (Abschnitt „Aufgaben-Seiten“): zuerst gemeinsame Themen-Engine, dann fehlende Seiten neu im Standard-Gerüst, wenn möglich als Teilaufgaben (siehe „Sparsam mit Tokens arbeiten“); vorhandene Seiten wiederverwenden. Jede Lösung prüfen (Musterlösung + symbolisch/numerisch).
+1. **Verstehen und planen, bevor gebaut wird.** Kurz bestätigen, welches Fach/Thema die Mindmap abdeckt und welches Material es gibt. In derselben Nachricht nach der **Lieferform** fragen (Online-Link oder ZIP, mit Empfehlung je Gerät; siehe oben). Entscheiden, wo 3D passt und wo Simulation und Quiz besser sind. Liste der geplanten Aufgaben (Titel + Quelle + mit/ohne 3D) nennen.
+2. **Aufgaben-Seiten bauen** (Abschnitt „Aufgaben-Seiten“): fehlende Seiten neu im passenden Standard-Gerüst, vorhandene wiederverwenden. Jede Lösung prüfen (Musterlösung + symbolisch/numerisch).
 3. **Konzepte aus den Seiten ziehen, nicht erfinden.** Die Seiten per Playwright öffnen, jeden Tab anklicken und `#sol-steps > li` samt Titel und Formel auslesen. Daraus kommen die Konzepte und die exakten Schrittnummern für die Sprünge.
 4. **Sprungmarken:** `sprungmarke_snippet.html` ans Ende jeder Aufgaben-Seite (nur einmal, vorher prüfen). URL-Format `datei.html#schritt-N` oder `datei.html#tab-<id>/schritt-N`. Das Snippet klickt den Tab, scrollt zum Schritt und markiert ihn gelb.
 5. **`data.js` komplett neu schreiben** (Schema unten).

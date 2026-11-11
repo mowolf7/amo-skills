@@ -65,7 +65,7 @@ The skill keeps the **design and code fixed** and writes the **content fresh** e
 | Layout, colours, fonts, light/dark mode | Topics, concepts, formulas, explanations, traps |
 | Map, panel, quiz and 3D engine (`map.js`, `panel.js`, `fig.js`, `net3d.js`) | Exercise pages with 3D model or simulation, exercises and solution |
 | 3D helpers: axes, labels, camera (`figb.js`) | All 3D figures or quizzes for the new subject |
-| Build and offline scripts (`build.py`, `offline.py`), shared page engine and style (`page_engine.js`, `page_style.css`), page skeletons, jump-link snippet | `data.js` (the full content of the map) |
+| Build and offline scripts (`build.py`, `offline.py`), page skeletons, jump-link snippet | `data.js` (the full content of the map) |
 
 `build.py` combines the template, the data file and the style of an exercise page into **one offline HTML file**. `offline.py` makes the exercise pages offline-ready and reports anything that would still load from the internet:
 
