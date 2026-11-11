@@ -49,6 +49,30 @@ Nicht jedes Fach braucht 3D. Bei theoretischen Fächern, bei Fragen mit langen A
 - Gemischt ist erlaubt: Themen mit räumlichem Bezug bekommen 3D, die anderen Simulation und Quiz. Das Kennzeichen am Themen-Kästchen der Karte passt man mit `badge` an (Standard „3D“).
 - Der Qualitätsmaßstab bleibt gleich: Jede Übung hat eine Erklärung zur richtigen Antwort, die Zahlen in Simulation und Klausurlösung kommen aus derselben Funktion.
 
+## Zu Beginn jeder neuen Anfrage: Lieferform erfragen
+
+Nicht jeder Nutzer hat einen Laptop. Deshalb **bei jeder neuen Anfrage, einmal ganz am Anfang** (zusammen mit der Planung in Schritt 1, nicht später noch einmal) fragen, wie das Ergebnis geliefert werden soll, und eine Empfehlung passend zum Gerät geben:
+
+| Gerät | Empfehlung | Warum |
+|---|---|---|
+| iPad, iPhone | **Online-Link** | Lokale HTML-Dateien öffnen sich dort nur eingeschränkt: Links zwischen den Seiten und das Aufgaben-Fenster funktionieren aus der Dateien-App meist nicht. |
+| Android-Handy oder -Tablet | **Online-Link** | Browser blockieren dort oft lokale Dateien und Links zwischen ihnen. |
+| Windows-, Mac- oder Linux-Laptop / PC | **ZIP mit Offline-HTML** | Läuft ohne Internet, auch in der Bibliothek oder im Zug; einfach entpacken und `00_…_Mindmap.html` doppelklicken. |
+| Chromebook | **Online-Link** (ZIP geht auch) | Lokale Dateien funktionieren, der Link ist aber einfacher. |
+| Mehrere Geräte oder Weitergabe an Kommilitonen | **beides** | Link zum schnellen Öffnen, ZIP als Sicherung ohne Internet. |
+
+- Die Frage kurz halten und das Gerät erfragen, falls es nicht bekannt ist. Hat der Nutzer die Lieferform in derselben Anfrage schon genannt, nicht noch einmal fragen.
+- **Online-Link:** als **privates** Artifact veröffentlichen (Mindmap als Seite, Aufgaben-Seiten als `files` daneben). Der Link ist zunächst nur für den Nutzer sichtbar; teilen kann er ihn selbst. Ist kein Veröffentlichungs-Werkzeug verfügbar, das offen sagen und das ZIP liefern.
+- **ZIP:** alle offline gemachten Dateien in einen Ordner, gezippt (z. B. `<Fach>_Mindmap.zip`). Im Ordner eine kurze `LIESMICH.txt`: erst entpacken, dann `00_…_Mindmap.html` öffnen (direkt aus dem ZIP heraus funktionieren die Links zwischen den Seiten nicht).
+- Beide Varianten enthalten dieselben Dateien: Auch die Online-Version lädt nichts nach und funktioniert nach dem Speichern offline.
+
+## Fertige 3D-Modelle aus offenen Quellen
+
+Für manche Fächer gibt es geprüfte, frei lizenzierte 3D-Modelle, zum Beispiel echte Anatomie statt selbst gezeichneter Formen. Die Liste steht in `sources.md` neben dieser Datei, sortiert nach Fach.
+- **Vor dem Bauen eigener Figuren** in `sources.md` nachsehen, ob es für das Fach eine Quelle gibt. Wenn ja, deren Modelle nehmen; nur was fehlt, selbst bauen.
+- Nur Quellen aus `sources.md` benutzen und ihre Regeln einhalten: beim Bauen herunterladen, auf das Nötige reduzieren und einbetten (die Dateien bleiben offline), Quellenangabe auf jeder Seite, ShareAlike-Lizenz der fertigen Seiten angeben, keine NC- oder ND-Teile.
+- Neue Quellen erst nach Prüfung der Lizenz in `sources.md` eintragen (Abschnitt „Adding a source“ dort).
+
 ## Aufgaben-Seiten (Standard-Aufbau wie EMF-1)
 
 Jede Aufgabe ist eine eigene HTML-Seite im Gerüst von `template/aufgabe_muster.html` (mit 3D) oder `template/aufgabe_muster_ohne3d.html` (ohne 3D). Design, Abschnitte, Klassen und IDs bleiben gleich, der Inhalt ist neu:
@@ -98,6 +122,7 @@ Alle Bausteine liegen im Ordner `template/` neben dieser `SKILL.md`. Nur diese V
 - `build.py` baut alles zu EINER offline nutzbaren Datei: `python3 -I build.py <data.js> <Seitenordner> <Stil-Seite> <Ausgabe.html>`. Übernimmt Farben, Schriften, Hell/Dunkel, Bruch `.fr`, `.warn`, `.memo`, `.btn` 1:1 aus der Stil-Seite und die `class="lede"`-Einleitungen aus den verlinkten Seiten, bettet die Bibliotheken ein
 - `offline.py` macht fertige Aufgaben-Seiten offline nutzbar: `python3 -I offline.py <Seite.html> …` (bettet Bibliotheken ein, entfernt Web-Schriften, meldet alles, was noch aus dem Netz käme)
 - `vendor/` d3 7.8.5, Three.js r128 und OrbitControls mit Lizenzen (wird eingebettet, nicht lesen)
+- `sources.md` (liegt neben `SKILL.md`, nicht in `template/`): geprüfte offene 3D-Modell-Quellen nach Fach, mit Lizenz, Nutzung und Quellenangabe
 - `data_beispiel_EMF1.js` vollständiges Datenbeispiel (nur als Muster für die Form, nicht für den Inhalt)
 - `aufgabe_muster.html` fertige Aufgaben-Seite mit 3D als Gerüst und Stil-Quelle
 - `aufgabe_muster_ohne3d.html` Aufgaben-Seite ohne 3D: Simulation, Vorhersagen, Üben (Multiple Choice, Zuordnen, Lückentext, Reihenfolge, Freitext), Klausurlösung; Inhalt sind Platzhalter
@@ -107,12 +132,12 @@ Alle Bausteine liegen im Ordner `template/` neben dieser `SKILL.md`. Nur diese V
 ## Ablauf (immer in dieser Reihenfolge)
 
 0. **Material in Markdown umwandeln** (Abschnitt oben), bevor irgendetwas gelesen oder geplant wird.
-1. **Verstehen und planen, bevor gebaut wird.** Kurz bestätigen, welches Fach/Thema die Mindmap abdeckt und welches Material es gibt. Entscheiden, wo 3D passt und wo Simulation und Quiz besser sind. Liste der geplanten Aufgaben (Titel + Quelle + mit/ohne 3D) nennen.
+1. **Verstehen und planen, bevor gebaut wird.** Kurz bestätigen, welches Fach/Thema die Mindmap abdeckt und welches Material es gibt. In derselben Nachricht nach der **Lieferform** fragen (Online-Link oder ZIP, mit Empfehlung je Gerät; siehe oben). Entscheiden, wo 3D passt und wo Simulation und Quiz besser sind. Liste der geplanten Aufgaben (Titel + Quelle + mit/ohne 3D) nennen.
 2. **Aufgaben-Seiten bauen** (Abschnitt „Aufgaben-Seiten“): fehlende Seiten neu im passenden Standard-Gerüst, vorhandene wiederverwenden. Jede Lösung prüfen (Musterlösung + symbolisch/numerisch).
 3. **Konzepte aus den Seiten ziehen, nicht erfinden.** Die Seiten per Playwright öffnen, jeden Tab anklicken und `#sol-steps > li` samt Titel und Formel auslesen. Daraus kommen die Konzepte und die exakten Schrittnummern für die Sprünge.
 4. **Sprungmarken:** `sprungmarke_snippet.html` ans Ende jeder Aufgaben-Seite (nur einmal, vorher prüfen). URL-Format `datei.html#schritt-N` oder `datei.html#tab-<id>/schritt-N`. Das Snippet klickt den Tab, scrollt zum Schritt und markiert ihn gelb.
 5. **`data.js` komplett neu schreiben** (Schema unten).
-6. **Neue Mini-3D-Figuren bauen – ohne auf einen Befehl zu warten.** Für jedes Konzept, bei dem 3D hilft (Felder, Flächen, Körper, Koordinaten, Bewegungen, Vektoren: fast immer), eine neue Figur zum Inhalt dieses Themas entwerfen, mit den Standard-Hilfsfunktionen aus `figb.js`. Alle neuen Figuren gemeinsam zeigen und selbst prüfen: richtig, lesbar, Achsen beschriftet, hell und dunkel sichtbar. Zum Zeigen einen Three.js-Viewer-Connector nehmen, falls verfügbar (Raster, gemeinsame Kamera), sonst Playwright-Screenshots. Dann in `figb.js` übernehmen und per `fig:` verknüpfen. **Wo 3D nicht passt:** stattdessen pro Konzept ein Mini-Quiz (`quiz:`) mit 2–4 Fragen schreiben.
+6. **Neue Mini-3D-Figuren bauen – ohne auf einen Befehl zu warten.** Zuerst in `sources.md` prüfen, ob es für das Fach fertige offene Modelle gibt, und diese bevorzugen. Für jedes Konzept, bei dem 3D hilft (Felder, Flächen, Körper, Koordinaten, Bewegungen, Vektoren: fast immer), eine neue Figur zum Inhalt dieses Themas entwerfen, mit den Standard-Hilfsfunktionen aus `figb.js`. Alle neuen Figuren gemeinsam zeigen und selbst prüfen: richtig, lesbar, Achsen beschriftet, hell und dunkel sichtbar. Zum Zeigen einen Three.js-Viewer-Connector nehmen, falls verfügbar (Raster, gemeinsame Kamera), sonst Playwright-Screenshots. Dann in `figb.js` übernehmen und per `fig:` verknüpfen. **Wo 3D nicht passt:** stattdessen pro Konzept ein Mini-Quiz (`quiz:`) mit 2–4 Fragen schreiben.
 7. **Bauen, offline machen und Vorschau:** `build.py` für die Mindmap, `offline.py` für alle Aufgaben-Seiten. Mit Playwright Screenshots hell, dunkel, mit einem ausgewählten Knoten (Seitenfenster mit neuer Figur bzw. Quiz) und von einer neuen Aufgaben-Seite (3D-Modell bzw. Simulation + Lösung) machen und dem Nutzer zeigen. Auf Freigabe warten.
 8. **Testen** (siehe Checkliste), dann speichern und kurz berichten.
 
@@ -164,7 +189,7 @@ window.MM = {
 
 - Mindmap und Aufgaben-Seiten nummeriert in denselben Ordner legen (z. B. `00_<Fach>_Mindmap.html`, `01_<Aufgabe>.html` …), damit die relativen Links und das Overlay-iframe unter `file://` funktionieren.
 - Arbeitet die Sitzung nicht direkt im Ordner des Nutzers (z. B. Cloud-Sitzung), die fertigen Dateien mit den verfügbaren Datei-Werkzeugen dorthin übertragen; bereits vorhandene Seiten nur ändern, wenn nötig (Sprungmarke), und vorher den aktuellen Stand lesen.
-- Optional, wenn das Artifact-Werkzeug verfügbar ist: als **privates** Artifact veröffentlichen, die Aufgaben-Seiten als `files` daneben, damit alles auch online komplett läuft. Nur auf Wunsch des Nutzers teilen.
+- In der Lieferform, die der Nutzer am Anfang gewählt hat: **Online-Link** (privates Artifact, Aufgaben-Seiten als `files` daneben) und/oder **ZIP** mit `LIESMICH.txt` (siehe „Zu Beginn jeder neuen Anfrage: Lieferform erfragen“). Den Link nur auf Wunsch des Nutzers teilen.
 - Alt- oder Varianten-Dateien des Nutzers nicht anfassen.
 - Geliefert werden nur die offline gemachten Dateien (nach `build.py` bzw. `offline.py`).
 - Abschluss: 1–2 Sätze, was drin ist (Anzahl Aufgaben, Konzepte, neue Figuren bzw. Quizze) und was getestet wurde, plus offene Entscheidungen oder Abweichungen zur Musterlösung. Kein Schritt-Protokoll.

@@ -1,0 +1,10 @@
+{
+  "name": "mindmaphtml-source-tools",
+  "private": true,
+  "description": "Build-time tools to fetch and convert open 3D model data (see ../../sources.md)",
+  "dependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "meshoptimizer": "^1.3.0"
+  }
+}
