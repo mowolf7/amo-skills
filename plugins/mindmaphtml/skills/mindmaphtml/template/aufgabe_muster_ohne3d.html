@@ -208,7 +208,7 @@ textarea.free{min-height:130px;resize:vertical;line-height:1.5}
 /* Lern-Engine für Aufgaben-Seiten ohne 3D:
    Vorhersagen (schaltet 2+3 frei), Beweis, Klausurlösung, Üben mit Multiple Choice, Zuordnen, Lückentext,
    Reihenfolge, Freitext mit Musterantwort, dazu Helfer für Simulationen. Nur die Daten weiter unten ändern sich pro Aufgabe. */
-const $=id=>document.getElementById(id);
+const byId=id=>document.getElementById(id);
 const fr=(n,d)=>`<span class="fr"><span>${n}</span><span>${d}</span></span>`;
 const nf=(v,d=2)=>Number(v).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
 const num=s=>{s=String(s).trim().replace(/\s|€|%/g,'');if(/,\d{1,2}$/.test(s)||/\d\.\d{3}/.test(s))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(',','.');return parseFloat(s);};
@@ -217,31 +217,31 @@ const norm=s=>String(s).toLowerCase().replace(/[\s.\-–]/g,'').replace(/ä/g,'a
 /* ---------- 1 Vorhersagen ---------- */
 function predict(Q,onDone){const S={};
  const done=()=>Q.every(q=>S[q.id]);
- function r(){const qs=$('qs');qs.innerHTML='';
+ function r(){const qs=byId('qs');qs.innerHTML='';
   Q.forEach((q,qi)=>{const p=S[q.id],locked=qi>0&&!S[Q[qi-1].id];const blk=document.createElement('div');blk.className='qblock';blk.innerHTML=`<p>${q.q}</p>`;
    const o=document.createElement('div');o.className='opts';
    q.opts.forEach(([k,t])=>{const b=document.createElement('button');b.className='opt';b.id=`opt-${q.id}-${k}`;b.innerHTML=t;
     if(p||locked)b.disabled=true;if(p){if(k===q.right)b.classList.add('right');else if(k===p)b.classList.add('wrong');}
     b.onclick=()=>{S[q.id]=k;r();};o.appendChild(b);});
    blk.appendChild(o);if(p){const n=document.createElement('p');n.className='note';n.innerHTML=p===q.right?q.yes:q.no;blk.appendChild(n);}qs.appendChild(blk);});
-  const old=$('s1').querySelector('.stamp');if(old)old.remove();
-  if(done()){const n=Q.filter(q=>S[q.id]===q.right).length;const st=document.createElement('span');st.className='stamp '+(n===Q.length?'ok':'no');st.textContent=`${n} / ${Q.length} richtig`;$('s1').appendChild(st);}
-  $('s2').classList.toggle('locked',!done());$('s3').classList.toggle('locked',!done());
-  $('s2-note').textContent=done()?'Simulation entsperrt – probier die Eingaben aus.':'Erst alle Vorhersagen tippen, dann sind Simulation und Beweis frei.';
+  const old=byId('s1').querySelector('.stamp');if(old)old.remove();
+  if(done()){const n=Q.filter(q=>S[q.id]===q.right).length;const st=document.createElement('span');st.className='stamp '+(n===Q.length?'ok':'no');st.textContent=`${n} / ${Q.length} richtig`;byId('s1').appendChild(st);}
+  byId('s2').classList.toggle('locked',!done());byId('s3').classList.toggle('locked',!done());
+  byId('s2-note').textContent=done()?'Simulation entsperrt – probier die Eingaben aus.':'Erst alle Vorhersagen tippen, dann sind Simulation und Beweis frei.';
   document.querySelectorAll('.sim-lock').forEach(e=>e.classList.toggle('is-locked',!done()));
   if(done()&&onDone)onDone();}
  r();}
 
 /* ---------- 3 Beweisen ---------- */
-function proof(items){$('proof').innerHTML=`<ol class="proof">${items.map(x=>`<li><div>${x}</div></li>`).join('')}</ol>`;}
+function proof(items){byId('proof').innerHTML=`<ol class="proof">${items.map(x=>`<li><div>${x}</div></li>`).join('')}</ol>`;}
 
 /* ---------- Klausurlösung ---------- */
 function solution(STEPS,TRAPS){
- $('sol-steps').innerHTML=STEPS.map(st=>`<li><div><div class="t">${st.t}</div>${st.m?`<div class="m">${st.m}</div>`:''}<p class="x">${st.x}</p>${st.w?`<div class="warn">${st.w}</div>`:''}</div></li>`).join('');
- $('sol-traps').innerHTML=TRAPS.map(t=>`<li>${t}</li>`).join('');}
+ byId('sol-steps').innerHTML=STEPS.map(st=>`<li><div><div class="t">${st.t}</div>${st.m?`<div class="m">${st.m}</div>`:''}<p class="x">${st.x}</p>${st.w?`<div class="warn">${st.w}</div>`:''}</div></li>`).join('');
+ byId('sol-traps').innerHTML=TRAPS.map(t=>`<li>${t}</li>`).join('');}
 
 /* ---------- Üben: Tabs ---------- */
-function practice(list){const host=$('practice');const tabs=host.querySelector('.tabs'),body=host.querySelector('.pbody');
+function practice(list){const host=byId('practice');const tabs=host.querySelector('.tabs'),body=host.querySelector('.pbody');
  list.forEach((p,i)=>{const b=document.createElement('button');b.className='tab';b.id='p-'+p.id;b.textContent=p.name;b.setAttribute('aria-pressed',i===0);tabs.appendChild(b);
   const d=document.createElement('div');d.className='pane';d.id='pane-'+p.id;d.hidden=i>0;body.appendChild(d);p.render(d);
   b.onclick=()=>{tabs.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-pressed',t===b));body.querySelectorAll('.pane').forEach(x=>x.hidden=x!==d);};});}
@@ -301,8 +301,8 @@ function freetext(el,F){F.forEach((f,fi)=>{const blk=document.createElement('div
 /* ---------- Helfer für Simulationen ---------- */
 function slider(id,label,min,max,step,val,fmt){return {id,label,min,max,step,val,fmt};}
 function mountSliders(host,list,onchange){host.innerHTML=list.map(s=>`<div class="slider"><label for="${s.id}" id="${s.id}-l"></label><input id="${s.id}" type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.val}"></div>`).join('');
- const read=()=>{const v={};list.forEach(s=>{v[s.id]=+$(s.id).value;$(s.id+'-l').textContent=`${s.label}: ${s.fmt(v[s.id])}`;});return v;};
- list.forEach(s=>$(s.id).addEventListener('input',()=>onchange(read())));return read;}
+ const read=()=>{const v={};list.forEach(s=>{v[s.id]=+byId(s.id).value;byId(s.id+'-l').textContent=`${s.label}: ${s.fmt(v[s.id])}`;});return v;};
+ list.forEach(s=>byId(s.id).addEventListener('input',()=>onchange(read())));return read;}
 function seg(host,opts,val,cb){host.innerHTML=opts.map(([k,t])=>`<button data-k="${k}" aria-pressed="${k===val}">${t}</button>`).join('');
  host.onclick=e=>{const b=e.target.closest('button');if(!b)return;host.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b.dataset.k);};}
 
@@ -310,17 +310,17 @@ function seg(host,opts,val,cb){host.innerHTML=opts.map(([k,t])=>`<button data-k=
 
 /* Simulation: Eingaben → Rechenweg als Tabelle. Dieselbe Funktion liefert die Zahlen für die Klausurlösung. */
 const PRE={p1:{a:120,b:15,v:'1',t:'Beispiel 1'},p2:{a:80,b:25,v:'2',t:'Beispiel 2'}};
-const readS=mountSliders($('sl'),[slider('s-f','Faktor',0.5,2,0.1,1,v=>nf(v,1))],draw);
+const readS=mountSliders(byId('sl'),[slider('s-f','Faktor',0.5,2,0.1,1,v=>nf(v,1))],draw);
 function calc(a,b,v,f){const z=a*b/100*f, e=v==='1'?a-z:a+z;return {z,e,probe:v==='1'?e+z:e-z};}
-function load(k){const p=PRE[k];$('in-a').value=p.a;$('in-b').value=p.b;$('in-v').value=p.v;draw();}
-function draw(){const a=num($('in-a').value)||0,b=num($('in-b').value)||0,v=$('in-v').value,f=readS()['s-f'];const r=calc(a,b,v,f);
- $('trace').innerHTML=`<tr><th>Schritt</th><th>Rechnung</th><th>Wert</th></tr>
+function load(k){const p=PRE[k];byId('in-a').value=p.a;byId('in-b').value=p.b;byId('in-v').value=p.v;draw();}
+function draw(){const a=num(byId('in-a').value)||0,b=num(byId('in-b').value)||0,v=byId('in-v').value,f=readS()['s-f'];const r=calc(a,b,v,f);
+ byId('trace').innerHTML=`<tr><th>Schritt</th><th>Rechnung</th><th>Wert</th></tr>
   <tr><td>Eingaben</td><td>A = ${nf(a)}, B = ${nf(b)}, Faktor ${nf(f,1)}</td><td class="n"></td></tr>
   <tr class="mk"><td>Zwischenwert</td><td>A · B / 100 · Faktor</td><td class="n">${nf(r.z)}</td></tr>
   <tr class="hl"><td>Ergebnis</td><td>${v==='1'?'A − Zwischenwert':'A + Zwischenwert'}</td><td class="n">${nf(r.e)}</td></tr>`;
- $('o-1').textContent=nf(r.z);$('o-2').textContent=nf(r.e);$('o-3').textContent=Math.abs(r.probe-a)<1e-9?'✓ stimmt':'✗';}
-['in-a','in-b'].forEach(id=>$(id).addEventListener('input',draw));$('in-v').addEventListener('change',draw);
-seg($('preset'),Object.entries(PRE).map(([k,p])=>[k,p.t]),'p1',load);load('p1');
+ byId('o-1').textContent=nf(r.z);byId('o-2').textContent=nf(r.e);byId('o-3').textContent=Math.abs(r.probe-a)<1e-9?'✓ stimmt':'✗';}
+['in-a','in-b'].forEach(id=>byId(id).addEventListener('input',draw));byId('in-v').addEventListener('change',draw);
+seg(byId('preset'),Object.entries(PRE).map(([k,p])=>[k,p.t]),'p1',load);load('p1');
 
 predict([
  {id:'q1',q:'Vorhersage-Frage 1, bevor gerechnet wird?',opts:[['a','Antwort A'],['b','Antwort B'],['c','Antwort C']],right:'a',yes:'Erklärung, warum A stimmt.',no:'Erklärung zur richtigen Antwort A.'},

@@ -27,14 +27,14 @@ jobs:
           python-version: "3.12"
 
       - name: Validate plugin and marketplace
-        run: npx -y @anthropic-ai/claude-code@2.1.318 plugin validate .
+        run: npx -y @anthropic-ai/claude-code@2.1.318 plugin validate . && npx -y @anthropic-ai/claude-code@2.1.318 plugin validate ./plugins/mindmaphtml
 
       - name: Example pages are offline-ready
-        run: python3 -I skills/mindmaphtml/template/offline.py examples/emf1/*.html
+        run: python3 -I plugins/mindmaphtml/skills/mindmaphtml/template/offline.py examples/emf1/*.html
 
       - name: Build the example mind map from the template
-        working-directory: skills/mindmaphtml/template
-        run: python3 -I build.py data_beispiel_EMF1.js ../../../examples/emf1 09_Zweigeteilte_Kugel.html "$RUNNER_TEMP/index.html"
+        working-directory: plugins/mindmaphtml/skills/mindmaphtml/template
+        run: python3 -I build.py data_beispiel_EMF1.js ../../../../../examples/emf1 09_Zweigeteilte_Kugel.html "$RUNNER_TEMP/index.html"
 
       - name: Install Playwright with Chromium
         run: |
@@ -46,7 +46,7 @@ jobs:
 
       - name: Browser test without network
         run: |
-          cp skills/mindmaphtml/template/test_komplett.js skills/mindmaphtml/template/test_route.js "$RUNNER_TEMP/t/"
+          cp plugins/mindmaphtml/skills/mindmaphtml/template/test_komplett.js plugins/mindmaphtml/skills/mindmaphtml/template/test_route.js "$RUNNER_TEMP/t/"
           cp examples/emf1/*.html "$RUNNER_TEMP/t/pages/"
           cp "$RUNNER_TEMP/index.html" "$RUNNER_TEMP/t/pages/00_build.html"
           cd "$RUNNER_TEMP/t"

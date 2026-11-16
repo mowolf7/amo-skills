@@ -1,0 +1,20 @@
+{
+  "name": "mindmaphtml",
+  "displayName": "MindMap HTML",
+  "description": "Interactive HTML learning mind maps with 3D figures and worked exercise pages (mindmaphtml)",
+  "version": "1.2.1",
+  "author": {
+    "name": "mowolf7"
+  },
+  "homepage": "https://mowolf7.github.io/amo-skills/",
+  "repository": "https://github.com/mowolf7/amo-skills",
+  "license": "MIT",
+  "keywords": [
+    "mind map",
+    "study",
+    "education",
+    "3d",
+    "offline",
+    "html"
+  ]
+}

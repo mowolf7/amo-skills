@@ -15,7 +15,7 @@ def make_offline(html):
 
 def external(html):
     """Alles, was beim Öffnen noch aus dem Netz käme (src/href auf http(s), @import, url(http…))."""
-    return (re.findall(r'<(?:script|link|img|iframe|source|video|audio)\b[^>]*\s(?:src|href)="((?:https?:)?//[^"]+)"',html)
+    return (re.findall(r'<(?:script|link|img|iframe|source|video|audio)\b[^>]*\s(?:src|href)=["\']((?:https?:)?//[^"\']+)["\']',html)
             +re.findall(r'url\(\s*["\']?(https?://[^)"\']+)',html))
 
 if __name__=='__main__':

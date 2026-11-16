@@ -5,7 +5,7 @@ description: "Use when the user says „mindmaphtml“ or wants an interactive H
 
 # mindmaphtml — Lern-Mindmap als eine HTML-Datei
 
-Vorlage ist die fertige EMF-1-Mindmap mit ihren Aufgaben-Seiten 01–09 (siehe `examples/emf1/` im Repository). Antworte in der Sprache des Nutzers, kurz, eine Sache nach der anderen. Die Vorlage selbst ist deutsch; Beschriftungen bei Bedarf übersetzen.
+Vorlage ist die fertige EMF-1-Mindmap mit ihren Aufgaben-Seiten 01–09 (fertiges Beispiel: https://github.com/mowolf7/amo-skills/tree/main/examples/emf1, Live-Demo: https://mowolf7.github.io/amo-skills/; das Beispiel wird nicht mit dem Plugin installiert). Antworte in der Sprache des Nutzers, kurz, eine Sache nach der anderen. Die Vorlage selbst ist deutsch; Beschriftungen bei Bedarf übersetzen.
 
 ## Immer zuerst: hochgeladene Dateien in Markdown umwandeln
 
@@ -63,7 +63,7 @@ Nicht jeder Nutzer hat einen Laptop. Deshalb **bei jeder neuen Anfrage, einmal g
 
 - Die Frage kurz halten und das Gerät erfragen, falls es nicht bekannt ist. Hat der Nutzer die Lieferform in derselben Anfrage schon genannt, nicht noch einmal fragen.
 - **Online-Link:** als **privates** Artifact veröffentlichen (Mindmap als Seite, Aufgaben-Seiten als `files` daneben). Der Link ist zunächst nur für den Nutzer sichtbar; teilen kann er ihn selbst. Ist kein Veröffentlichungs-Werkzeug verfügbar, das offen sagen und das ZIP liefern.
-- **ZIP:** alle offline gemachten Dateien in einen Ordner, gezippt (z. B. `<Fach>_Mindmap.zip`). Im Ordner eine kurze `LIESMICH.txt`: erst entpacken, dann `00_…_Mindmap.html` öffnen (direkt aus dem ZIP heraus funktionieren die Links zwischen den Seiten nicht).
+- **ZIP:** alle offline gemachten Dateien in einen Ordner, gezippt (z. B. `<Fach>_Mindmap.zip`). Im Ordner eine kurze `LIESMICH.txt` (in der Sprache des Nutzers, z. B. `README.txt`): erst entpacken, dann `00_…_Mindmap.html` öffnen (direkt aus dem ZIP heraus funktionieren die Links zwischen den Seiten nicht).
 - Beide Varianten enthalten dieselben Dateien: Auch die Online-Version lädt nichts nach und funktioniert nach dem Speichern offline.
 
 ## Fertige 3D-Modelle aus offenen Quellen
@@ -110,7 +110,7 @@ Alle Bausteine liegen im Ordner `template/` neben dieser `SKILL.md`. Nur diese V
 - In einen Arbeitsordner kopieren, dort bauen. Die Vorlage im Skill-Ordner nicht verändern.
 - Stil-Quelle für `build.py` und Gerüst für neue Aufgaben-Seiten: `aufgabe_muster.html` bzw. `aufgabe_muster_ohne3d.html`. Gibt es im Fach schon eigene fertige Seiten, deren Stil nehmen.
 - `template/vendor/` (eingebettete Bibliotheken) nicht lesen, nur von `build.py`/`offline.py` benutzen lassen. Das spart Tokens.
-- Ein vollständiges fertiges Beispiel (Mindmap + 9 Aufgaben-Seiten) liegt im Repository unter `examples/emf1/`.
+- Ein vollständiges fertiges Beispiel (Mindmap + 9 Aufgaben-Seiten) liegt im GitHub-Repository unter `examples/emf1/` (nicht im installierten Plugin). Zum Bauen wird es nicht gebraucht: `aufgabe_muster.html` und `data_beispiel_EMF1.js` zeigen Aufbau und Qualität.
 
 ### Bausteine
 - `tpl.html` Gerüst (Platzhalter `/*BASECSS*/ /*REUSECSS*/ /*DATA*/ /*MAP*/ /*PANEL*/ /*FIGB*/ /*FIG*/ /*NET3D*/`, Daten-Block zwischen `<!-- MM:DATA -->` und `<!-- /MM:DATA -->`)
@@ -127,7 +127,7 @@ Alle Bausteine liegen im Ordner `template/` neben dieser `SKILL.md`. Nur diese V
 - `aufgabe_muster.html` fertige Aufgaben-Seite mit 3D als Gerüst und Stil-Quelle
 - `aufgabe_muster_ohne3d.html` Aufgaben-Seite ohne 3D: Simulation, Vorhersagen, Üben (Multiple Choice, Zuordnen, Lückentext, Reihenfolge, Freitext), Klausurlösung; Inhalt sind Platzhalter
 - `sprungmarke_snippet.html` wird ans Ende jeder Aufgaben-Seite gehängt (in beiden Mustern schon enthalten)
-- `test_komplett.js` + `test_route.js` Playwright-Test. `test_route.js` blockt jede Anfrage ins Netz, so zeigt der Test auch, dass alles offline läuft. Seiten in `pages/`, Dateiname der Mindmap im Skript anpassen
+- `test_komplett.js` + `test_route.js` Playwright-Test. `test_route.js` blockt jede Anfrage ins Netz, so zeigt der Test auch, dass alles offline läuft. Seiten in `pages/`, Aufruf `node test_komplett.js <Mindmap.html>`; der Test endet mit „ALLES OK“ oder „TEST FEHLGESCHLAGEN“
 
 ## Ablauf (immer in dieser Reihenfolge)
 
@@ -182,7 +182,11 @@ window.MM = {
 - **Jede neue Figur** rendert (Canvas nicht leer), Achsen und Beschriftungen sichtbar; **jedes Mini-Quiz** zeigt nach einer Antwort richtig/falsch und die Erklärung; 3D-Ansicht an und wieder aus (der Knopf muss über dem 3D-Canvas liegen, `.mapctl{z-index:2}`).
 - **Offline:** Alle Seiten mit blockiertem Netz öffnen (`test_route.js`); es darf keine einzige Anfrage nach außen geben, und `offline.py` meldet bei jeder Datei „offline ok“.
 - Keine Konsolenfehler hell und dunkel; `scrollWidth − innerWidth = 0` bei 390 px, auch auf den Aufgaben-Seiten.
-- Den Screenshot selbst ansehen: Zonen-Beschriftungen nicht verdeckt, Labels lesbar, Design gleich wie bei EMF-1.
+- **Sichtprüfung (Pflicht, vor der Lieferung):** Von der Mindmap (hell und dunkel), von jeder 3D-Mini-Figur und von jeder Aufgaben-Seite mit 3D-Modell oder Simulation einen Screenshot machen und selbst ansehen. Geprüft wird:
+  - Beschriftungen überlappen weder einander noch Bedienhinweise, Achsen oder Knöpfe; wo es eng wird, Beschriftung versetzen und mit einer Hinweislinie verbinden
+  - die ganze Figur ist im Bild (Kamera passend zum Modell), nichts ist unschön abgeschnitten
+  - Zonen-Beschriftungen der Karte nicht verdeckt, alles lesbar, Design gleich wie bei EMF-1
+  - Was auffällt, beheben und den Screenshot neu machen. Automatische Tests finden solche Fehler nicht.
 - Testskripte schreiben Ergebnisse sofort weg (`console.log` je Zeile), damit ein Absturz keine Ergebnisse verschluckt; lange Läufe mit `timeout` laufen lassen.
 
 ## Speichern
@@ -200,4 +204,4 @@ window.MM = {
 - Die Zone des Mitte-Bereichs nur aus seinen eigenen Konzepten bilden, sonst überdeckt sie alles.
 - Overlay-Elemente in der Karte (Ecke „Immer machen“) unten links platzieren, oben verdecken sie Zonen-Beschriftungen.
 - Mini-Figur-Kamera etwa bei (2.9, 2.3, 3.8); 3D-Netz-Kamera etwa bei (0, 50, 280).
-- Artifact-`files` brauchen Quellpfade im Arbeits- oder Scratchpad-Ordner; .py/.html-Bausteine als `.txt` mit `contentType: text/plain` ablegen.
+- Artifact-`files` brauchen Quellpfade im Arbeits- oder Scratchpad-Ordner.

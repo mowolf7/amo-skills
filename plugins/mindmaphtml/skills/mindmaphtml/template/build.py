@@ -7,12 +7,14 @@ import re,sys,json,os
 here=os.path.dirname(os.path.abspath(__file__))
 data_p,pages,style,out=sys.argv[1:5]
 s=open(os.path.join(pages,style),encoding='utf-8').read()
+if ':root{' not in s or '.tabs,.seg' not in s:
+    sys.exit('FEHLER: Stil-Seite '+style+' enthält nicht das Standard-CSS (:root{ … .tabs,.seg). Eine Seite im Gerüst von aufgabe_muster.html angeben.')
 css=s[s.index(':root{'):s.index('.tabs,.seg')]
 reuse='\n'.join(re.findall(r'^\.(?:fr|memo|warn|btn)\b[^{]*\{[^}]*\}',s,re.M))
 data=open(data_p,encoding='utf-8').read()
 ledes={}
-for m in re.finditer(r"file:'([^']+)'",data):
-    f=m.group(1);fp=os.path.join(pages,f)
+for m in re.finditer(r"file:\s*(['\"`])([^'\"`]+)\1",data):
+    f=m.group(2);fp=os.path.join(pages,f)
     if os.path.exists(fp):
         l=re.search(r'class="lede"[^>]*>(.*?)</p>',open(fp,encoding='utf-8').read(),re.S);ledes[f]=l.group(1).strip() if l else ''
     else: print('WARNUNG: Seite fehlt:',f)
@@ -23,8 +25,11 @@ for k,v in {'/*BASECSS*/':css,'/*REUSECSS*/':reuse,'/*DATA*/':data,'/*MAP*/':src
     t=t.replace(k,v)
 # Immer offline: Bibliotheken aus vendor/ einbetten, Web-Schriften entfernen, Rest prüfen
 # Titel im Browser-Tab und im Artifact aus meta.title (statt des Vorlagen-Titels)
-m=re.search(r"title:'([^']+)'",data)
-if m:t=re.sub(r'<title>.*?</title>','<title>'+m.group(1).replace('&','&amp;').replace('<','&lt;')+'</title>',t,count=1)
+m=re.search(r"title:\s*(['\"`])((?:\\.|(?!\1).)*)\1",data)
+if m:
+    ti=re.sub(r'\\(.)',r'\1',m.group(2)).replace('&','&amp;').replace('<','&lt;')
+    t=re.sub(r'<title>.*?</title>',lambda _:'<title>'+ti+'</title>',t,count=1)
+else:print('WARNUNG: meta.title nicht gefunden, Titel bleibt "Mindmap"')
 sys.path.insert(0,here);import offline
 t=offline.make_offline(t);ext=offline.external(t)
 open(out,'w',encoding='utf-8').write(t);print('ok',out,len(t),'Bytes, Einleitungen:',sum(1 for x in ledes.values() if x))

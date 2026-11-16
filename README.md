@@ -6,7 +6,7 @@ A Claude Code plugin marketplace with skills for building interactive study mate
 
 | Skill | What it does |
 |---|---|
-| [`mindmaphtml`](skills/mindmaphtml/SKILL.md) | Builds an interactive learning mind map as offline HTML files. It has a 2D concept map, a side panel for each concept with a mini 3D figure or a mini quiz, and links to interactive exercise pages with worked solutions. |
+| [`mindmaphtml`](plugins/mindmaphtml/skills/mindmaphtml/SKILL.md) | Builds an interactive learning mind map as offline HTML files. It has a 2D concept map, a side panel for each concept with a mini 3D figure or a mini quiz, and links to interactive exercise pages with worked solutions. |
 
 ![EMF-1 example mind map (light mode, concept "Gaußscher Satz" selected)](docs/mindmap-light.png)
 
@@ -18,7 +18,7 @@ In Claude Code:
 
 ```
 /plugin marketplace add mowolf7/amo-skills
-/plugin install amo-skills@amo-skills
+/plugin install mindmaphtml@amo-skills
 ```
 
 Then ask Claude for a mind map, for example: *"mindmaphtml for my course, here are my exercise sheets"*.
@@ -31,7 +31,7 @@ Then ask Claude for a mind map, for example: *"mindmaphtml for my course, here a
 - **Uses fewer tokens.** Uploaded material (PDF, Word, slides, spreadsheets …) is converted to Markdown once at the start. After that Claude searches and reads only the parts it needs instead of opening the originals again and again. This makes long sessions cheaper and the answers more precise.
 - **Fits any subject.** Where 3D helps, you get 3D models and figures. Where it does not, you get simulations of the solution path, more exercise types and a mini quiz per concept instead.
 - **Checked solutions.** Every solution is compared with the official model solution when one exists, and checked independently (symbolically or numerically).
-- **Real 3D models where they exist.** A checked list of open-licensed model sources per field ([`sources.md`](skills/mindmaphtml/sources.md)), starting with medicine: real bones, muscles, organs, vessels and nerves instead of hand-drawn shapes, with credits added automatically.
+- **Real 3D models where they exist.** A checked list of open-licensed model sources per field ([`sources.md`](plugins/mindmaphtml/skills/mindmaphtml/sources.md)), starting with medicine: real bones, muscles, organs, vessels and nerves instead of hand-drawn shapes, with credits added automatically.
 - **Delivered the way your device needs it.** At the start of every request Claude asks whether you want an online link or a ZIP of offline HTML files, and recommends one for your device (online link for iPad, iPhone and Android; ZIP for laptops and PCs).
 - **Same look every time.** Design and code come from a fixed template; only the content is new.
 
@@ -46,7 +46,7 @@ Then ask Claude for a mind map, for example: *"mindmaphtml for my course, here a
 
 ### Subjects without 3D
 
-For theoretical subjects, questions that need long written answers, calculations without a spatial picture, or anything else where 3D does not help, the skill does not force 3D. It builds exercise pages from [`aufgabe_muster_ohne3d.html`](skills/mindmaphtml/template/aufgabe_muster_ohne3d.html) instead: a step-by-step simulation of the solution path, more exercise types, and a mini quiz in the side panel. 3D and non-3D topics can be mixed in one map.
+For theoretical subjects, questions that need long written answers, calculations without a spatial picture, or anything else where 3D does not help, the skill does not force 3D. It builds exercise pages from [`aufgabe_muster_ohne3d.html`](plugins/mindmaphtml/skills/mindmaphtml/template/aufgabe_muster_ohne3d.html) instead: a step-by-step simulation of the solution path, more exercise types, and a mini quiz in the side panel. 3D and non-3D topics can be mixed in one map.
 
 ### Example: EMF 1 (electromagnetic fields)
 
@@ -60,7 +60,7 @@ For theoretical subjects, questions that need long written answers, calculations
 
 The skill keeps the **design and code fixed** and writes the **content fresh** each time:
 
-| Stays the same (from [`template/`](skills/mindmaphtml/template/)) | New for every mind map |
+| Stays the same (from [`template/`](plugins/mindmaphtml/skills/mindmaphtml/template/)) | New for every mind map |
 |---|---|
 | Layout, colours, fonts, light/dark mode | Topics, concepts, formulas, explanations, traps |
 | Map, panel, quiz and 3D engine (`map.js`, `panel.js`, `fig.js`, `net3d.js`) | Exercise pages with 3D model or simulation, exercises and solution |
@@ -91,22 +91,26 @@ The libraries in the generated pages ([d3](https://d3js.org) 7.8.5, [Three.js](h
 
 ```
 .claude-plugin/
-  marketplace.json        # marketplace definition
-  plugin.json             # plugin manifest
-skills/mindmaphtml/
-  SKILL.md                # instructions Claude follows
-  sources.md              # checked open 3D model sources per field
-  template/               # fixed building blocks (HTML, JS, build, offline + test scripts)
-    vendor/               # embedded libraries with their licenses
-examples/emf1/            # finished offline example (mind map + 9 exercise pages)
-docs/                     # screenshots for this README
-.github/workflows/        # automatic checks and live demo
-CHANGELOG.md              # version history
+  marketplace.json          # marketplace definition
+plugins/mindmaphtml/        # the plugin (only this folder is installed)
+  .claude-plugin/
+    plugin.json             # plugin manifest
+    icon.png                # icon for the directory listing
+  README.md, LICENSE
+  skills/mindmaphtml/
+    SKILL.md                # instructions Claude follows
+    sources.md              # checked open 3D model sources per field
+    template/               # fixed building blocks (HTML, JS, build, offline + test scripts)
+      vendor/               # embedded libraries with their licenses
+examples/emf1/              # finished offline example (mind map + 9 exercise pages)
+docs/                       # screenshots for this README
+.github/workflows/          # automatic checks and live demo
+CHANGELOG.md                # version history
 ```
 
 ## Adding a skill
 
-Create `skills/<name>/SKILL.md` with `name` and `description` frontmatter, then run `claude plugin validate .` before you open a pull request.
+Create `plugins/mindmaphtml/skills/<name>/SKILL.md` with `name` and `description` frontmatter, then run `claude plugin validate ./plugins/mindmaphtml` before you open a pull request.
 
 ## Language
 
@@ -114,4 +118,4 @@ The template and the example are in German. When you use the skill in another la
 
 ## License
 
-[MIT](LICENSE) © mowolf7. Bundled libraries keep their own licenses: d3 (ISC) and Three.js (MIT), see `skills/mindmaphtml/template/vendor/`.
+[MIT](LICENSE) © mowolf7. Bundled libraries keep their own licenses: d3 (ISC) and Three.js (MIT), see `plugins/mindmaphtml/skills/mindmaphtml/template/vendor/`.
