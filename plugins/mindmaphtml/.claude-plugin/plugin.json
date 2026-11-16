@@ -1,8 +1,8 @@
 {
-  "name": "mindmaphtml",
+  "name": "amo-skills",
   "displayName": "MindMap HTML",
   "description": "Interactive HTML learning mind maps with 3D figures and worked exercise pages (mindmaphtml)",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": {
     "name": "mowolf7"
   },
