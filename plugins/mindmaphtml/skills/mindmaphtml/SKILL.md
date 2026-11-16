@@ -182,7 +182,11 @@ window.MM = {
 - **Jede neue Figur** rendert (Canvas nicht leer), Achsen und Beschriftungen sichtbar; **jedes Mini-Quiz** zeigt nach einer Antwort richtig/falsch und die Erklärung; 3D-Ansicht an und wieder aus (der Knopf muss über dem 3D-Canvas liegen, `.mapctl{z-index:2}`).
 - **Offline:** Alle Seiten mit blockiertem Netz öffnen (`test_route.js`); es darf keine einzige Anfrage nach außen geben, und `offline.py` meldet bei jeder Datei „offline ok“.
 - Keine Konsolenfehler hell und dunkel; `scrollWidth − innerWidth = 0` bei 390 px, auch auf den Aufgaben-Seiten.
-- Den Screenshot selbst ansehen: Zonen-Beschriftungen nicht verdeckt, Labels lesbar, Design gleich wie bei EMF-1.
+- **Sichtprüfung (Pflicht, vor der Lieferung):** Von der Mindmap (hell und dunkel), von jeder 3D-Mini-Figur und von jeder Aufgaben-Seite mit 3D-Modell oder Simulation einen Screenshot machen und selbst ansehen. Geprüft wird:
+  - Beschriftungen überlappen weder einander noch Bedienhinweise, Achsen oder Knöpfe; wo es eng wird, Beschriftung versetzen und mit einer Hinweislinie verbinden
+  - die ganze Figur ist im Bild (Kamera passend zum Modell), nichts ist unschön abgeschnitten
+  - Zonen-Beschriftungen der Karte nicht verdeckt, alles lesbar, Design gleich wie bei EMF-1
+  - Was auffällt, beheben und den Screenshot neu machen. Automatische Tests finden solche Fehler nicht.
 - Testskripte schreiben Ergebnisse sofort weg (`console.log` je Zeile), damit ein Absturz keine Ergebnisse verschluckt; lange Läufe mit `timeout` laufen lassen.
 
 ## Speichern

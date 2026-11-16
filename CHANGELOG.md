@@ -8,6 +8,8 @@ All notable changes to this marketplace. Versions follow [Semantic Versioning](h
 - `build.py` reads titles and file names in any quote style and reports a missing style page or title clearly; `offline.py` also detects single-quoted external URLs.
 - The plugin now lives in `plugins/mindmaphtml/` with its own README, license and icon, so installs no longer download the example and screenshots (about 1.5 MB instead of 8.5 MB).
 - Template helper `$` renamed to `byId` (no change in behaviour).
+- Plugin renamed from `amo-skills` to `mindmaphtml` (display name "MindMap HTML"); the marketplace keeps the name `amo-skills`. Install with `/plugin install mindmaphtml@amo-skills`.
+- Required visual check before delivery: screenshots of the map, every 3D figure and every exercise page, checked for overlapping labels and framing.
 
 ## 1.2.0
 

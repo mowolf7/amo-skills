@@ -9,7 +9,7 @@
   },
   "plugins": [
     {
-      "name": "amo-skills",
+      "name": "mindmaphtml",
       "source": "./plugins/mindmaphtml",
       "description": "Interactive HTML learning mind maps with 3D figures and worked exercise pages (mindmaphtml)",
       "version": "1.2.1"
