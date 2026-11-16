@@ -18,7 +18,7 @@ In Claude Code:
 
 ```
 /plugin marketplace add mowolf7/amo-skills
-/plugin install mindmaphtml@amo-skills
+/plugin install amo-skills@amo-skills
 ```
 
 Danach Claude um eine Mindmap bitten, zum Beispiel: *„mindmaphtml für mein Fach, hier sind meine Übungsblätter“*.

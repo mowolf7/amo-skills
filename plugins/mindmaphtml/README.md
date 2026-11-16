@@ -14,7 +14,7 @@ Builds an interactive learning mind map from your course material as offline HTM
 
 ## How to use
 
-Ask Claude for a mind map and attach your material, for example: "mindmaphtml for my anatomy course, topic knee joint, here are my slides". In Claude Code you can also type `/mindmaphtml:mindmaphtml`.
+Ask Claude for a mind map and attach your material, for example: "mindmaphtml for my anatomy course, topic knee joint, here are my slides". In Claude Code you can also type `/amo-skills:mindmaphtml`.
 
 ## What it needs
 

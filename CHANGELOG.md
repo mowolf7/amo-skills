@@ -2,6 +2,10 @@
 
 All notable changes to this marketplace. Versions follow [Semantic Versioning](https://semver.org).
 
+## 1.2.2
+
+- Plugin name back to `amo-skills`, so existing installs keep working: `/plugin install amo-skills@amo-skills`. The rename in 1.2.1 was only needed for the Claude plugin directory, which is not used for now. The display name stays "MindMap HTML".
+
 ## 1.2.1
 
 - Fix: the "Klausurlösung" button in the side panel opened nothing (error in the step label); the browser test now clicks it for every topic.
