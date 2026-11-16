@@ -1,18 +1,18 @@
 // Seitenfenster (Thema/Konzept mit 3D-Figur oder Mini-Quiz), Overlay mit der Aufgaben-Seite, Ecke „Immer machen“, Suche und Bereichsfilter.
 (function(){
-const D=window.MM, M=window.MMmap, $=id=>document.getElementById(id), P=$('panel');
+const D=window.MM, M=window.MMmap, byId=id=>document.getElementById(id), P=byId('panel');
 const tById=Object.fromEntries(D.topics.map(t=>[t.id,t])), cById=Object.fromEntries(D.concepts.map(c=>[c.id,c]));
 const col=a=>`var(${D.areas[a].col})`;
-const stepLabel=h=>{if(!h)return 'Seite ansehen';const m=h.match(/(?:tab-([\w-]+)\/)?schritt-(\d+)/);const tab=(D.tabNames||{})[m[1]]||'';return `Schritt ${m[2]}${tab?' · '+tab:''}`;};
+const stepLabel=h=>{if(!h)return 'Seite ansehen';const m=h.match(/(?:tab-([\w-]+)\/)?schritt-(\d+)/);if(!m)return h==='loesung'?'Klausurlösung':'Seite ansehen';const tab=(D.tabNames||{})[m[1]]||'';return `Schritt ${m[2]}${tab?' · '+tab:''}`;};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 // ---------- Overlay: fertige 3D-Seite öffnen (nichts wird neu gebaut) ----------
-const ov=$('ov'), frame=$('ov-frame');
+const ov=byId('ov'), frame=byId('ov-frame');
 function openPage(tid,hash){const t=tById[tid];const url=t.file+(hash?'#'+hash:'');
-  $('ov-title').textContent=`${t.nr} · ${t.name}`+(hash?` — ${stepLabel(hash)}`:'');$('ov-tab').href=url;
-  frame.src='about:blank';requestAnimationFrame(()=>{frame.src=url;});ov.hidden=false;document.body.classList.add('noscroll');$('ov-close').focus();}
+  byId('ov-title').textContent=`${t.nr} · ${t.name}`+(hash?` — ${stepLabel(hash)}`:'');byId('ov-tab').href=url;
+  frame.src='about:blank';requestAnimationFrame(()=>{frame.src=url;});ov.hidden=false;document.body.classList.add('noscroll');byId('ov-close').focus();}
 function closePage(){ov.hidden=true;frame.src='about:blank';document.body.classList.remove('noscroll');}
-$('ov-close').onclick=closePage;addEventListener('keydown',e=>{if(e.key==='Escape'&&!ov.hidden)closePage();});
+byId('ov-close').onclick=closePage;addEventListener('keydown',e=>{if(e.key==='Escape'&&!ov.hidden)closePage();});
 ov.addEventListener('click',e=>{if(e.target===ov)closePage();});
 
 // ---------- Panel-Inhalte ----------
@@ -38,7 +38,7 @@ function concept(c){const an=D.analog.filter(a=>a[0]===c.id||a[1]===c.id);
  ${c.m?`<div class="memo"><b>Merksatz:</b> ${c.m}</div>`:''}
  <h3>Taucht auf in</h3><ul class="uses">${Object.entries(c.use).map(([tid,h])=>{const t=tById[tid];return `<li><button class="tref" data-t="${tid}" style="--c:${col(t.area)}"><b>${t.nr}</b> ${esc(t.name)}</button><button class="go" data-open="${tid}" data-h="${h}">${stepLabel(h)} →</button></li>`;}).join('')}</ul>
  ${an.length?`<h3>Analogie</h3>${an.map(a=>{const o=cById[a[0]===c.id?a[1]:a[0]];return `<p class="analog">${chip(o)}<br>${a[2]}</p>`;}).join('')}`:''}`;
- if(c.fig&&window.MMfig)window.MMfig.mount($('fig'),c.fig);else if(c.quiz)quiz($('quiz'),c.quiz);}
+ if(c.fig&&window.MMfig)window.MMfig.mount(byId('fig'),c.fig);else if(c.quiz)quiz(byId('quiz'),c.quiz);}
 // Mini-Quiz statt 3D-Figur (Konzept mit quiz:[{q,o:[…],r,why}]): eine Antwort pro Frage, danach die Erklärung
 function quiz(el,Q){Q.forEach((q,qi)=>{const b=document.createElement('div');b.className='q';b.innerHTML=`<p><b>${qi+1}.</b> ${q.q}</p><div class="opts"></div>`;
   const o=b.querySelector('.opts'),bs=q.o.map(t=>{const x=document.createElement('button');x.className='opt';x.innerHTML=t;o.appendChild(x);return x;});
@@ -56,17 +56,17 @@ addEventListener('mm-select',e=>{if(window.MMfig)window.MMfig.unmount();const n=
 P.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.open){openPage(b.dataset.open,b.dataset.h||'');return;}
   const id=b.dataset.c||b.dataset.t;if(id){M.select(id);M.focus(id);}});
-if(D.always)$('always').onclick=always;else $('always').hidden=true;
-if(D.meta){['title','eyebrow','lede'].forEach(k=>{if(D.meta[k]){const el=document.querySelector(k==='title'?'h1':'.'+k);if(el)el.textContent=D.meta[k];}});if(D.meta.title)document.title=D.meta.title;if(D.meta.search)$('q').placeholder=D.meta.search;}
-$('always').querySelector('b')&&D.always&&($('always').innerHTML=`<b>✓ Immer machen</b>${D.always.name}: gilt für jede Aufgabe`);
+if(D.always)byId('always').onclick=always;else byId('always').hidden=true;
+if(D.meta){['title','eyebrow','lede'].forEach(k=>{if(D.meta[k]){const el=document.querySelector(k==='title'?'h1':'.'+k);if(el)el.textContent=D.meta[k];}});if(D.meta.title)document.title=D.meta.title;if(D.meta.search)byId('q').placeholder=D.meta.search;}
+byId('always').querySelector('b')&&D.always&&(byId('always').innerHTML=`<b>✓ Immer machen</b>${D.always.name}: gilt für jede Aufgabe`);
 
 // ---------- Suche & Filter ----------
 const on=new Set(Object.keys(D.areas));
-$('chips').innerHTML=Object.entries(D.areas).map(([k,a])=>`<button class="fchip" data-a="${k}" aria-pressed="true" style="--c:var(${a.col})">${a.name}</button>`).join('');
-function apply(){const hits=M.filter(on,$('q').value);$('qn').textContent=$('q').value.trim()?`${hits.length} Treffer`:'';return hits;}
-$('chips').onclick=e=>{const b=e.target.closest('.fchip');if(!b)return;const a=b.dataset.a;on.has(a)?on.delete(a):on.add(a);b.setAttribute('aria-pressed',on.has(a));apply();};
-$('q').oninput=apply;
-$('q').onkeydown=e=>{if(e.key==='Enter'){const h=apply();if(h[0]){M.select(h[0].id);M.focus(h[0].id);}}};
-$('fit').onclick=()=>M.fit();
+byId('chips').innerHTML=Object.entries(D.areas).map(([k,a])=>`<button class="fchip" data-a="${k}" aria-pressed="true" style="--c:var(${a.col})">${a.name}</button>`).join('');
+function apply(){const hits=M.filter(on,byId('q').value);byId('qn').textContent=byId('q').value.trim()?`${hits.length} Treffer`:'';return hits;}
+byId('chips').onclick=e=>{const b=e.target.closest('.fchip');if(!b)return;const a=b.dataset.a;on.has(a)?on.delete(a):on.add(a);b.setAttribute('aria-pressed',on.has(a));apply();};
+byId('q').oninput=apply;
+byId('q').onkeydown=e=>{if(e.key==='Enter'){const h=apply();if(h[0]){M.select(h[0].id);M.focus(h[0].id);}}};
+byId('fit').onclick=()=>M.fit();
 intro();
 })();

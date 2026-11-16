@@ -194,7 +194,7 @@ footer{color:var(--muted);font-size:13px}
 const fr=(n,d)=>`<span class="fr"><span>${n}</span><span>${d}</span></span>`;
 const lim=(lo,hi)=>`∫<span class="lim"><span>${lo}</span><span>${hi}</span></span>`;
 const sq=t=>`√<span style="border-top:1.4px solid currentColor;padding:0 2px">${t}</span>`;
-const $=id=>document.getElementById(id);
+const byId=id=>document.getElementById(id);
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const ab=Math.abs;
 /* normiert: r₀ = 1, Φ in Einheiten ρ₀ r₀² / (2ε₀) */
@@ -220,19 +220,19 @@ const PROOF=`<ol class="proof">
 </ol>`;
 const MEMO=`<div class="memo"><div><b>Rezept „Scheibe, Ring, Abstand“:</b> dv′ = R dR dφ′ dz′, Abstand √(R² + (z − z′)²), Reihenfolge φ′ → R → z′. Die R-Grenze √(r₀² − z′²) kommt von der Kugel.</div><div><b>Merke:</b> √((z − z′)²) = |z − z′| und ((z ∓ r₀)²)<sup>3/2</sup> = |z ∓ r₀|³. Betrag nie vergessen.</div></div>`;
 function renderSteps(){
-  const qs=$('qs');qs.innerHTML='';
+  const qs=byId('qs');qs.innerHTML='';
   Q.forEach((q,qi)=>{const p=S.pred[q.id],locked=qi>0&&!S.pred[Q[qi-1].id];const blk=document.createElement('div');blk.className='qblock';blk.innerHTML=`<p>${q.q}</p>`;
     const o=document.createElement('div');o.className='opts';
     q.opts.forEach(([k,t])=>{const btn=document.createElement('button');btn.className='opt';btn.id=`opt-${q.id}-${k}`;btn.textContent=t;
       if(p||locked)btn.disabled=true;if(p){if(k===q.right)btn.classList.add('right');else if(k===p)btn.classList.add('wrong');}
       btn.onclick=()=>{S.pred[q.id]=k;renderSteps();update();};o.appendChild(btn);});
     blk.appendChild(o);if(p){const n=document.createElement('p');n.className='note';n.textContent=p===q.right?q.yes:q.no;blk.appendChild(n);}qs.appendChild(blk);});
-  const old=$('s1').querySelector('.stamp');if(old)old.remove();
+  const old=byId('s1').querySelector('.stamp');if(old)old.remove();
   const done=allDone();
-  if(done){const n=Q.filter(q=>S.pred[q.id]===q.right).length;const st=document.createElement('span');st.className='stamp '+(n===Q.length?'ok':'no');st.textContent=`${n} / ${Q.length} richtig`;$('s1').appendChild(st);}
-  $('s2').classList.toggle('locked',!done);$('s3').classList.toggle('locked',!done);
-  $('s2-note').textContent=done?'Plot und Zahlen entsperrt.':'Φ-Werte und Plot sind gesperrt, bis du alle drei Fragen getippt hast.';
-  $('proof').innerHTML=(done?PROOF+MEMO:'<p class="why">Erst vorhersagen und testen.</p>')+'<a class="note" href="#loesung">Komplette Rechnung mit Achtung-Hinweisen ↓</a>';
+  if(done){const n=Q.filter(q=>S.pred[q.id]===q.right).length;const st=document.createElement('span');st.className='stamp '+(n===Q.length?'ok':'no');st.textContent=`${n} / ${Q.length} richtig`;byId('s1').appendChild(st);}
+  byId('s2').classList.toggle('locked',!done);byId('s3').classList.toggle('locked',!done);
+  byId('s2-note').textContent=done?'Plot und Zahlen entsperrt.':'Φ-Werte und Plot sind gesperrt, bis du alle drei Fragen getippt hast.';
+  byId('proof').innerHTML=(done?PROOF+MEMO:'<p class="why">Erst vorhersagen und testen.</p>')+'<a class="note" href="#loesung">Komplette Rechnung mit Achtung-Hinweisen ↓</a>';
 }
 
 /* ---------- Klausurlösung ---------- */
@@ -253,30 +253,30 @@ const STEPS=[
  {t:'Probe 3: Summe statt Differenz',m:`Summe → Differenz: homogene Kugel mit <i>Q</i> = ${fr('4','3')}π<i>r</i>₀³ρ₀, &nbsp; außen Φ = ${fr('<i>Q</i>','4πε₀|<i>z</i>|')} ✓`,x:'Ist die ganze Kugel mit +ρ₀ geladen, kommt außen das Punktladungspotential heraus. Im Plot ist das die gestrichelte Kurve.'},
  {t:'Bonus: Feld auf der Achse',m:`<i>E</i><sub>z</sub> = −${fr('dΦ','d<i>z</i>')}, &nbsp; <i>E</i><sub>x</sub> = <i>E</i><sub>y</sub> = 0 auf der Achse`,x:'Aus Symmetrie hat E auf der Achse nur eine z-Komponente. Im Plot über den Knopf E<sub>z</sub>(z) anzeigen.'}];
 const TRAPS=['Gauß geht nicht, die Ladung ist nicht kugelsymmetrisch.','R-Grenze √(r₀² − z′²), also R innen und z′ außen integrieren.','√((z − z′)²) = |z − z′| und ((z ∓ r₀)²)<sup>3/2</sup> = |z ∓ r₀|³.','sgn(z′): obere Hälfte plus, untere Hälfte minus.','Proben: Φ(0) = 0, Φ ungerade, weit weg Dipol ∝ 1/z².'];
-$('sol-steps').innerHTML=STEPS.map(st=>`<li><div><div class="t">${st.t}</div><div class="m">${st.m}</div><p class="x">${st.x}</p>${st.w?`<div class="warn">${st.w}</div>`:''}</div></li>`).join('');
-$('sol-traps').innerHTML=TRAPS.map(t=>`<li>${t}</li>`).join('');
+byId('sol-steps').innerHTML=STEPS.map(st=>`<li><div><div class="t">${st.t}</div><div class="m">${st.m}</div><p class="x">${st.x}</p>${st.w?`<div class="warn">${st.w}</div>`:''}</div></li>`).join('');
+byId('sol-traps').innerHTML=TRAPS.map(t=>`<li>${t}</li>`).join('');
 
 /* ---------- Regler, Zahlen, Plot ---------- */
-$('szp').addEventListener('input',()=>{S.zp=+$('szp').value;update();});
-$('sz').addEventListener('input',()=>{S.z=+$('sz').value;update();});
-function setG(g){S.g=g;$('g-P').setAttribute('aria-pressed',g==='P');$('g-E').setAttribute('aria-pressed',g==='E');draw();}
-$('g-P').onclick=()=>setG('P');$('g-E').onclick=()=>setG('E');
+byId('szp').addEventListener('input',()=>{S.zp=+byId('szp').value;update();});
+byId('sz').addEventListener('input',()=>{S.z=+byId('sz').value;update();});
+function setG(g){S.g=g;byId('g-P').setAttribute('aria-pressed',g==='P');byId('g-E').setAttribute('aria-pressed',g==='E');draw();}
+byId('g-P').onclick=()=>setG('P');byId('g-E').onclick=()=>setG('E');
 function update(){
-  $('szp-l').textContent=`Höhe der Scheibe: z′ = ${S.zp.toFixed(2)}·r₀`;
-  $('sz-l').textContent=`Aufpunkt P auf der Achse: z = ${S.z.toFixed(2)}·r₀`;
+  byId('szp-l').textContent=`Höhe der Scheibe: z′ = ${S.zp.toFixed(2)}·r₀`;
+  byId('sz-l').textContent=`Aufpunkt P auf der Achse: z = ${S.z.toFixed(2)}·r₀`;
   const done=allDone();
-  $('o-s').textContent=S.zp>0?'+ρ₀':'−ρ₀';$('o-s').style.color=S.zp>0?'#ef4444':'#2563eb';
-  $('o-d').textContent=dPhi(S.z,S.zp).toFixed(3);
-  $('o-p').textContent=done?Phi(S.z).toFixed(3):'?';
-  $('o-r').textContent=done?(Math.abs(S.z)<0.05?'–':(Phi(S.z)/(Math.sign(S.z)/(4*S.z*S.z))).toFixed(2)):'?';
+  byId('o-s').textContent=S.zp>0?'+ρ₀':'−ρ₀';byId('o-s').style.color=S.zp>0?'#ef4444':'#2563eb';
+  byId('o-d').textContent=dPhi(S.z,S.zp).toFixed(3);
+  byId('o-p').textContent=done?Phi(S.z).toFixed(3):'?';
+  byId('o-r').textContent=done?(Math.abs(S.z)<0.05?'–':(Phi(S.z)/(Math.sign(S.z)/(4*S.z*S.z))).toFixed(2)):'?';
   build3D();draw();
 }
-const plot=$('plot'),ctx=plot.getContext('2d');
+const plot=byId('plot'),ctx=plot.getContext('2d');
 function draw(){
   const dpr=window.devicePixelRatio||1,w=plot.clientWidth,hh=plot.clientHeight;if(!w)return;
   plot.width=w*dpr;plot.height=hh*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,hh);
   const mut=css('--muted'),line=css('--line'),isP=S.g==='P';
-  $('plot-title').textContent=isP?'Φ(z) · 2ε₀ / (ρ₀ r₀²) auf der z-Achse':'E_z(z) · 2ε₀ / (ρ₀ r₀) auf der z-Achse';
+  byId('plot-title').textContent=isP?'Φ(z) · 2ε₀ / (ρ₀ r₀²) auf der z-Achse':'E_z(z) · 2ε₀ / (ρ₀ r₀) auf der z-Achse';
   const ymin=isP?-1.1:-1.6,ymax=isP?1.1:0.6,L=44,R=12,T=14,B=34,X=v=>L+(v+2.5)/5*(w-L-R),Y=v=>T+(ymax-Math.max(ymin,Math.min(ymax,v)))/(ymax-ymin)*(hh-T-B);
   ctx.font='12px "Atkinson Hyperlegible",sans-serif';ctx.fillStyle=mut;ctx.strokeStyle=line;ctx.lineWidth=1;
   for(const v of (isP?[-1,-0.5,0,0.5,1]:[-1.5,-1,-0.5,0,0.5])){ctx.beginPath();ctx.moveTo(L,Y(v));ctx.lineTo(w-R,Y(v));ctx.stroke();ctx.textAlign='right';ctx.fillText(String(v),L-6,Y(v)+4);}
@@ -294,16 +294,16 @@ function draw(){
 }
 
 /* ---------- 3D (Modell aus der Vorschau) ---------- */
-const host=$('three');let renderer,scene,camera,controls,dyn,tag,T3,C,tagCol;const r0=1.2;let sparks=[];
+const host=byId('three');let renderer,scene,camera,controls,dyn,tag,T3,C,tagCol;const r0=1.2;let sparks=[];
 let seed=5;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
 function init3D(){
   if(!window.THREE){host.insertAdjacentHTML('beforeend','<p class="why" style="padding:12px">3D konnte nicht geladen werden. Regler und Plot funktionieren trotzdem.</p>');return;}
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));renderer.setClearColor(0x000000,0);host.prepend(renderer.domElement);
   scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(40,1.4,0.1,100);camera.position.set(5.6,2.4,5.6);
   if(THREE.OrbitControls){controls=new THREE.OrbitControls(camera,renderer.domElement);controls.target.set(0,0.3,0);controls.enableDamping=true;controls.autoRotate=!matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=0.4;}
-  $('v-spin').setAttribute('aria-pressed',!!(controls&&controls.autoRotate));
-  $('v-spin').onclick=()=>{if(!controls)return;controls.autoRotate=!controls.autoRotate;$('v-spin').setAttribute('aria-pressed',controls.autoRotate);};
-  $('v-reset').onclick=()=>{camera.position.set(5.6,2.4,5.6);if(controls){controls.target.set(0,0.3,0);controls.update();}};
+  byId('v-spin').setAttribute('aria-pressed',!!(controls&&controls.autoRotate));
+  byId('v-spin').onclick=()=>{if(!controls)return;controls.autoRotate=!controls.autoRotate;byId('v-spin').setAttribute('aria-pressed',controls.autoRotate);};
+  byId('v-reset').onclick=()=>{camera.position.set(5.6,2.4,5.6);if(controls){controls.target.set(0,0.3,0);controls.update();}};
 
   C={plus:0xef4444,minus:0x2563eb,field:0xf97316,spark:0xfb923c,el:0xd946ef,P:0x0891b2,ax:0x16a34a,ay:0x9333ea,az:0x0891b2,edge:0x64748b};
   tagCol={plus:'#ff6b6b',minus:'#6ea8ff',field:'#ffa24d',el:'#f0abfc',P:'#22d3ee',ax:'#4ade80',ay:'#c084fc',az:'#22d3ee',muted:'#cbd5e1'};

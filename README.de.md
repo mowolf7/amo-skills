@@ -6,7 +6,7 @@ Ein Claude-Code-Plugin-Marketplace mit Skills für interaktives Lernmaterial.
 
 | Skill | Was er macht |
 |---|---|
-| [`mindmaphtml`](skills/mindmaphtml/SKILL.md) | Baut eine interaktive Lern-Mindmap als offline nutzbare HTML-Dateien. Sie hat eine 2D-Konzeptkarte, ein Seitenfenster pro Konzept mit kleiner 3D-Figur oder Mini-Quiz und Links zu interaktiven Aufgabenseiten mit Lösungsweg. |
+| [`mindmaphtml`](plugins/mindmaphtml/skills/mindmaphtml/SKILL.md) | Baut eine interaktive Lern-Mindmap als offline nutzbare HTML-Dateien. Sie hat eine 2D-Konzeptkarte, ein Seitenfenster pro Konzept mit kleiner 3D-Figur oder Mini-Quiz und Links zu interaktiven Aufgabenseiten mit Lösungsweg. |
 
 ![EMF-1-Beispiel (heller Modus, Konzept „Gaußscher Satz“ ausgewählt)](docs/mindmap-light.png)
 
@@ -31,7 +31,7 @@ Danach Claude um eine Mindmap bitten, zum Beispiel: *„mindmaphtml für mein Fa
 - **Spart Tokens.** Hochgeladenes Material (PDF, Word, Folien, Tabellen …) wird am Anfang einmal in Markdown umgewandelt. Danach sucht und liest Claude nur die Stellen, die gebraucht werden, statt die Originale immer wieder komplett zu öffnen. Lange Sitzungen werden dadurch günstiger und die Antworten genauer.
 - **Passt zu jedem Fach.** Wo 3D hilft, gibt es 3D-Modelle und -Figuren. Wo nicht, gibt es stattdessen Simulationen des Lösungswegs, mehr Aufgabentypen und ein Mini-Quiz pro Konzept.
 - **Geprüfte Lösungen.** Jede Lösung wird mit der Musterlösung abgeglichen, wenn es eine gibt, und zusätzlich unabhängig geprüft (symbolisch oder numerisch).
-- **Echte 3D-Modelle, wo es sie gibt.** Eine geprüfte Liste offen lizenzierter Modell-Quellen pro Fach ([`sources.md`](skills/mindmaphtml/sources.md)), zuerst Medizin: echte Knochen, Muskeln, Organe, Gefäße und Nerven statt selbst gezeichneter Formen, mit automatischer Quellenangabe.
+- **Echte 3D-Modelle, wo es sie gibt.** Eine geprüfte Liste offen lizenzierter Modell-Quellen pro Fach ([`sources.md`](plugins/mindmaphtml/skills/mindmaphtml/sources.md)), zuerst Medizin: echte Knochen, Muskeln, Organe, Gefäße und Nerven statt selbst gezeichneter Formen, mit automatischer Quellenangabe.
 - **Geliefert, wie dein Gerät es braucht.** Zu Beginn jeder Anfrage fragt Claude, ob du einen Online-Link oder eine ZIP mit Offline-HTML-Dateien möchtest, und empfiehlt eins passend zum Gerät (Online-Link für iPad, iPhone und Android; ZIP für Laptop und PC).
 - **Immer gleiches Design.** Aussehen und Code kommen aus einer festen Vorlage, nur der Inhalt ist neu.
 
@@ -46,7 +46,7 @@ Danach Claude um eine Mindmap bitten, zum Beispiel: *„mindmaphtml für mein Fa
 
 ### Fächer ohne 3D
 
-Bei theoretischen Fächern, bei Fragen mit langen Antworten in eigenen Worten, bei Rechnungen ohne räumliches Bild oder überall sonst, wo 3D nichts erklärt, wird kein 3D erzwungen. Der Skill baut die Aufgabenseiten dann aus [`aufgabe_muster_ohne3d.html`](skills/mindmaphtml/template/aufgabe_muster_ohne3d.html): mit einer Schritt-für-Schritt-Simulation des Lösungswegs, mehr Aufgabentypen und einem Mini-Quiz im Seitenfenster. Themen mit und ohne 3D lassen sich in einer Karte mischen.
+Bei theoretischen Fächern, bei Fragen mit langen Antworten in eigenen Worten, bei Rechnungen ohne räumliches Bild oder überall sonst, wo 3D nichts erklärt, wird kein 3D erzwungen. Der Skill baut die Aufgabenseiten dann aus [`aufgabe_muster_ohne3d.html`](plugins/mindmaphtml/skills/mindmaphtml/template/aufgabe_muster_ohne3d.html): mit einer Schritt-für-Schritt-Simulation des Lösungswegs, mehr Aufgabentypen und einem Mini-Quiz im Seitenfenster. Themen mit und ohne 3D lassen sich in einer Karte mischen.
 
 ### Beispiel: EMF 1 (Elektromagnetische Felder)
 
@@ -60,7 +60,7 @@ Bei theoretischen Fächern, bei Fragen mit langen Antworten in eigenen Worten, b
 
 Der Skill hält **Design und Code fest** und schreibt den **Inhalt jedes Mal neu**:
 
-| Bleibt gleich (aus [`template/`](skills/mindmaphtml/template/)) | Neu bei jeder Mindmap |
+| Bleibt gleich (aus [`template/`](plugins/mindmaphtml/skills/mindmaphtml/template/)) | Neu bei jeder Mindmap |
 |---|---|
 | Layout, Farben, Schriften, Hell/Dunkel | Themen, Konzepte, Formeln, Erklärungen, Fallen |
 | Karte, Seitenfenster, Quiz und 3D-Technik (`map.js`, `panel.js`, `fig.js`, `net3d.js`) | Aufgabenseiten mit 3D-Modell oder Simulation, Übungen und Lösung |
@@ -91,22 +91,26 @@ Die Bibliotheken der fertigen Seiten ([d3](https://d3js.org) 7.8.5, [Three.js](h
 
 ```
 .claude-plugin/
-  marketplace.json        # Marketplace-Definition
-  plugin.json             # Plugin-Manifest
-skills/mindmaphtml/
-  SKILL.md                # Anleitung, der Claude folgt
-  sources.md              # geprüfte offene 3D-Modell-Quellen pro Fach
-  template/               # feste Bausteine (HTML, JS, Build-, Offline- und Test-Skripte)
-    vendor/               # eingebettete Bibliotheken mit ihren Lizenzen
-examples/emf1/            # fertiges Offline-Beispiel (Mindmap + 9 Aufgabenseiten)
-docs/                     # Screenshots für diese README
-.github/workflows/        # automatische Prüfung und Live-Demo
-CHANGELOG.md              # Versionsverlauf
+  marketplace.json          # Marketplace-Definition
+plugins/mindmaphtml/        # das Plugin (nur dieser Ordner wird installiert)
+  .claude-plugin/
+    plugin.json             # Plugin-Manifest
+    icon.png                # Icon für das Verzeichnis
+  README.md, LICENSE
+  skills/mindmaphtml/
+    SKILL.md                # Anleitung, der Claude folgt
+    sources.md              # geprüfte offene 3D-Modell-Quellen pro Fach
+    template/               # feste Bausteine (HTML, JS, Build-, Offline- und Test-Skripte)
+      vendor/               # eingebettete Bibliotheken mit ihren Lizenzen
+examples/emf1/              # fertiges Offline-Beispiel (Mindmap + 9 Aufgabenseiten)
+docs/                       # Screenshots für diese README
+.github/workflows/          # automatische Prüfung und Live-Demo
+CHANGELOG.md                # Versionsverlauf
 ```
 
 ## Einen Skill hinzufügen
 
-`skills/<name>/SKILL.md` mit `name` und `description` im Frontmatter anlegen und vor einem Pull Request `claude plugin validate .` ausführen.
+`plugins/mindmaphtml/skills/<name>/SKILL.md` mit `name` und `description` im Frontmatter anlegen und vor einem Pull Request `claude plugin validate ./plugins/mindmaphtml` ausführen.
 
 ## Sprache
 
@@ -114,4 +118,4 @@ Vorlage und Beispiel sind auf Deutsch. Benutzt du den Skill in einer anderen Spr
 
 ## Lizenz
 
-[MIT](LICENSE) © mowolf7. Mitgelieferte Bibliotheken behalten ihre eigenen Lizenzen: d3 (ISC) und Three.js (MIT), siehe `skills/mindmaphtml/template/vendor/`.
+[MIT](LICENSE) © mowolf7. Mitgelieferte Bibliotheken behalten ihre eigenen Lizenzen: d3 (ISC) und Three.js (MIT), siehe `plugins/mindmaphtml/skills/mindmaphtml/template/vendor/`.

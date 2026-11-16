@@ -26,6 +26,12 @@ for(const scheme of ['light','dark']){
    const k=await p.$$eval('#quiz .q',x=>x.length);await p.click('#quiz .q .opt');const why=await p.$('#quiz .why');if(k!==n||!why)qb.push(id);}
   out.push('quiz '+qz.length+' fail:'+JSON.stringify(qb));
   if(qz[0]){await p.evaluate(i=>{MMmap.select(null);MMmap.select(i)},qz[0][0]);await p.waitForTimeout(100);await p.screenshot({path:'f_quiz.png'});}
+  // Knopf „Klausurlösung“ jedes Themas öffnet das Overlay
+  const tids=await p.evaluate(()=>MM.topics.filter(t=>!t.noSolution).map(t=>t.id));let sb=[];
+  for(const id of tids){await p.evaluate(i=>{MMmap.select(null);MMmap.select(i)},id);await p.waitForTimeout(40);
+   const btn=await p.$('#panel .btnrow button[data-h="loesung"]');if(!btn){sb.push(id+':kein Knopf');continue;}await btn.click();await p.waitForTimeout(80);
+   if(await p.$eval('#ov',o=>o.hidden))sb.push(id);else await p.keyboard.press('Escape');}
+  out.push('solution-button '+tids.length+' fail:'+JSON.stringify(sb));
   // alle Sprungziele prüfen
   const targets=await p.evaluate(()=>{const r=[];MM.concepts.forEach(c=>Object.entries(c.use).forEach(([t,h])=>r.push([c.id,t,h])));if(MM.always)Object.entries(MM.always.use).forEach(([t,h])=>r.push(['always',t,h]));return r;});
   const fileOf=await p.evaluate(()=>Object.fromEntries(MM.topics.map(t=>[t.id,t.file])));

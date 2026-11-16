@@ -2,6 +2,13 @@
 
 All notable changes to this marketplace. Versions follow [Semantic Versioning](https://semver.org).
 
+## 1.2.1
+
+- Fix: the "Klausurlösung" button in the side panel opened nothing (error in the step label); the browser test now clicks it for every topic.
+- `build.py` reads titles and file names in any quote style and reports a missing style page or title clearly; `offline.py` also detects single-quoted external URLs.
+- The plugin now lives in `plugins/mindmaphtml/` with its own README, license and icon, so installs no longer download the example and screenshots (about 1.5 MB instead of 8.5 MB).
+- Template helper `$` renamed to `byId` (no change in behaviour).
+
 ## 1.2.0
 
 - Fix: the browser tab and artifact title now use the mind map's own title instead of "EMF 1 Mindmap".
